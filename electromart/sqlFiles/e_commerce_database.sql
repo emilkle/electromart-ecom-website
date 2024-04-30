@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Apr 30, 2024 at 03:00 PM
+-- Generation Time: May 01, 2024 at 12:14 AM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -68,10 +68,7 @@ CREATE TABLE `Category` (
 
 CREATE TABLE `CreditCard` (
   `credit_card_flag` enum('Credit card') NOT NULL DEFAULT 'Credit card',
-  `card_number` int(12) NOT NULL,
-  `expiration_date` date NOT NULL,
-  `security_code` int(3) NOT NULL,
-  `cardholders_name` varchar(255) NOT NULL
+  `third_party_service` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_danish_ci;
 
 -- --------------------------------------------------------
