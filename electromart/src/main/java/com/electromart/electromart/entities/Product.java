@@ -1,0 +1,85 @@
+package com.electromart.electromart.entities;
+
+import jakarta.persistence.*;
+
+@Entity
+@Table(name="Product")
+public class Product {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long productId;
+
+    @ManyToOne
+    @JoinColumn(name = "brand_ID")
+    private Brand brand;
+
+    @ManyToOne
+    @JoinColumn(name = "category_ID")
+    private Category category;
+
+    private String name;
+
+    private String description;
+
+    private int price;
+
+    public Product () {
+
+    }
+
+    public Product (Brand brand, Category category) {
+        this.brand = brand;
+        this.category = category;
+        this.name = "";
+        this.description = "";
+        this.price = 0;
+    }
+
+    public Long getProductId() {
+        return productId;
+    }
+
+    public void setProductId(Long productId) {
+        this.productId = productId;
+    }
+
+    public Brand getBrand() {
+        return brand;
+    }
+
+    public void setBrand(Brand brand) {
+        this.brand = brand;
+    }
+
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public int getPrice() {
+        return price;
+    }
+
+    public void setPrice(int price) {
+        this.price = price;
+    }
+}
