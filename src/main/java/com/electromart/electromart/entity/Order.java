@@ -5,16 +5,26 @@ import jakarta.persistence.*;
 @Entity
 @Table(name="order")
 public class Order {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long order_ID;
+    private String orderID;
 
-    public void setOrder_ID(Long orderId) {
-        this.order_ID = orderId;
-    }
+    @OneToOne
+    @JoinColumn(name = "user_id")
+    private User userID;
 
-    public Long getOrder_ID() {
-        return order_ID;
+    private String orderDate;
+    private String orderTotalAmount;
+    private String orderStatus;
+
+    public Order () {}
+
+    public Order (String orderID, User userID, String orderDate, String orderTotalAmount, String orderStatus) {
+        this.orderID = orderID;
+        this.userID = userID;
+        this.orderDate = orderDate;
+        this.orderTotalAmount = orderTotalAmount;
+        this.orderStatus = orderStatus;
     }
 }
+
