@@ -9,7 +9,7 @@ public class Shipping {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private String shippingID;
 
-
+    @ManyToOne
     @JoinColumn(name = "order_id")
     private Order orderID;
 
@@ -18,7 +18,8 @@ public class Shipping {
 
     public Shipping() {}
 
-    public Shipping(String shippingMethod, String shippingCost){
+    public Shipping(Order orderID, String shippingMethod, String shippingCost){
+        this.orderID = orderID;
         this.shippingMethod = shippingMethod;
         this.shippingCost = shippingCost;
     }
