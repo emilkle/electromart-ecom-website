@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 
 import java.io.Serializable;
 
+/*
 @Entity
 @Table(name="creditcard")
 public class CreditCard implements Payment {
@@ -19,4 +20,4 @@ public class CreditCard implements Payment {
         this.creditCardFlag = creditCardFlag;
         this.thirdPartService = thirdPartService;
     }
-}
+}*/

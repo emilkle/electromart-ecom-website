@@ -2,6 +2,7 @@ package com.electromart.electromart.entity;
 
 import jakarta.persistence.*;
 
+/*
 @Entity
 @Table(name="payment")
 public interface Payment {
@@ -18,4 +19,4 @@ public interface Payment {
     String paymentDate;
     String paymentStatus;
 
-}
+}*/
