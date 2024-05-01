@@ -9,6 +9,7 @@ public class Shipping {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private String shippingID;
 
+
     @JoinColumn(name = "order_id")
     private Order orderID;
 
