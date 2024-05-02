@@ -36,13 +36,13 @@ public class InventoryService {
     /**
      *
      * @param productID externally supplied productID for checking inventory amount
-     * @param shoppingCartAmount externally supplied amount to check againt inventoryAmount
+     * @param shoppingCartAmount externally supplied amount to check against inventoryAmount
      * @throws Exception productID not found, shoppingCartAmount negative or zero.
      */
     public boolean checkInventoryQuantity(long productID, int shoppingCartAmount) throws Exception {
 
         if (shoppingCartAmount <= 0) {
-            throw new Exception("Invalid amount supplied.");
+            throw new Exception("Invalid number supplied.");
         }
         Inventory product = inventoryRepository.findById(productID)
                 .orElseThrow(()-> new Exception("Product not found"));
