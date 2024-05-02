@@ -14,14 +14,14 @@ public class Promotion {
     private Product productID;
 
     private String description;
-    private int discountType;
+    private String discountType;
     private int discountValue;
     private String startDate;
     private String endDate;
 
     public Promotion () {}
 
-    public Promotion(Product product, String description, int discountType, int discountValue, String startDate, String endDate) {
+    public Promotion(Product product, String description, String discountType, int discountValue, String startDate, String endDate) {
         this.productID = product;
         this.description = description;
         this.discountType = discountType;
@@ -46,11 +46,11 @@ public class Promotion {
         this.description = description;
     }
 
-    public int getDiscountType() {
+    public String getDiscountType() {
         return discountType;
     }
 
-    public void setDiscountType(int discountType) {
+    public void setDiscountType(String discountType) {
         this.discountType = discountType;
     }
 
