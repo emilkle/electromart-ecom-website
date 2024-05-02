@@ -43,12 +43,12 @@ public class PromotionService {
     /**
      * startPromotionAndUpdatePrice creates a new promotion and updates the corresponding product with the correct
      * discounted price
-     * @param productID
-     * @param description
-     * @param discountType
-     * @param discountValue
-     * @param startDate
-     * @param endDate
+     * @param productID a products id
+     * @param description description of a promotion
+     * @param discountType type of discount, percentage or fixed
+     * @param discountValue amount of discount
+     * @param startDate promotion start date
+     * @param endDate promotion end date
      */
     public void startPromotionAndUpdatePrice (Product productID, String description, String discountType, int discountValue, String startDate, String endDate) {
         Promotion promotion = new Promotion(productID, description, discountType, discountValue, startDate, endDate);
