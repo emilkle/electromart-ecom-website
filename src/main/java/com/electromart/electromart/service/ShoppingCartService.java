@@ -82,8 +82,8 @@ public class ShoppingCartService {
     public float cartTotalPrice() {
         float totalAmount = 0;
         if (!shoppingCart.isEmpty()) {
-            for (int i = 0; i < shoppingCart.size(); i++) {
-                totalAmount += shoppingCart.get(i).getCartItemPrice();
+            for (CartItem cartItem : shoppingCart) {
+                totalAmount += cartItem.getCartItemPrice();
             }
         }
         return totalAmount;
