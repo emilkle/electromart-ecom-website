@@ -14,17 +14,21 @@ public class Order {
     private User userID;
 
     private String orderDate;
-    private String orderTotalAmount;
+    private float orderTotalAmount;
     private String orderStatus;
 
     public Order () {}
 
-    public Order (String orderID, User userID, String orderDate, String orderTotalAmount, String orderStatus) {
+    public Order (String orderID, User userID, String orderDate, float orderTotalAmount, String orderStatus) {
         this.orderID = orderID;
         this.userID = userID;
         this.orderDate = orderDate;
         this.orderTotalAmount = orderTotalAmount;
         this.orderStatus = orderStatus;
+    }
+
+    public float getOrderTotalAmount() {
+        return orderTotalAmount;
     }
 }
 

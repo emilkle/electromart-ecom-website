@@ -14,11 +14,11 @@ public class Shipping {
     private Order orderID;
 
     private String shippingMethod;
-    private String shippingCost;
+    private float shippingCost;
 
     public Shipping() {}
 
-    public Shipping(Order orderID, String shippingMethod, String shippingCost){
+    public Shipping(Order orderID, String shippingMethod, float shippingCost){
         this.orderID = orderID;
         this.shippingMethod = shippingMethod;
         this.shippingCost = shippingCost;
@@ -48,11 +48,11 @@ public class Shipping {
         this.shippingMethod = shippingMethod;
     }
 
-    public String getShippingCost() {
+    public float getShippingCost() {
         return shippingCost;
     }
 
-    public void setShippingCost(String shippingCost) {
+    public void setShippingCost(float shippingCost) {
         this.shippingCost = shippingCost;
     }
 }
