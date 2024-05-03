@@ -89,6 +89,10 @@ public class ShoppingCartService {
         return totalAmount;
     }
 
+    /**
+     *  empties shoppingcart
+     * @return boolean to communicate empty check complete
+     */
     public boolean emptyShoppingCart() {
         if (!shoppingCart.isEmpty()) {
             shoppingCart.clear();
