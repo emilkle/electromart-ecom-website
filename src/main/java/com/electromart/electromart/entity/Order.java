@@ -14,7 +14,7 @@ public class Order {
     private User userID;
 
     private String orderDate;
-    private String orderTotalAmount;
+    private float orderTotalAmount;
     private String orderStatus;
 
     public Order () {}
@@ -25,6 +25,10 @@ public class Order {
         this.orderDate = orderDate;
         this.orderTotalAmount = orderTotalAmount;
         this.orderStatus = orderStatus;
+    }
+
+    public float getOrderTotalAmount() {
+        return orderTotalAmount;
     }
 }
 

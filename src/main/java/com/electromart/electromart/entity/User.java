@@ -20,10 +20,10 @@ public class User {
     private String email;
 
     //@Column(nullable = false, length = 100)
-    private String name;
+    private String firstName;
 
-    //@Column(length = 255)
-    private String address;
+    private String lastName;
+
 
     /**
      * Constructor for the user entity.
@@ -37,14 +37,13 @@ public class User {
      * Constructor no 2 with arguments for the User entity.
      * @param password the users password
      * @param email the users email address
-     * @param name the users name
-     * @param address the users address
+     * @param firstName the users first name
+     * @param lastName last name of user
      */
-    public User(String password, String name, String email, String address) {
+    public User(String password, String firstName, String lastName, String email) {
         this.password = password;
-        this.name = name;
+        this.firstName = firstName;
         this.email = email;
-        this.address = address;
     }
 
     /**
@@ -81,18 +80,26 @@ public class User {
 
     /**
      * getName
-     * @return the name of the user
+     * @return the first name of the user
      */
-    public String getName() {
-        return name;
+    public String getFirstName() {
+        return firstName;
     }
 
     /**
      * setName
-     * @param name the specified name of the user
+     * @param firstName the specified first name of the user
      */
-    public void setName(String name) {
-        this.name = name;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
     /**
@@ -109,22 +116,6 @@ public class User {
      */
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    /**
-     * getAddress
-     * @return the address of the user
-     */
-    public String getAddress() {
-        return address;
-    }
-
-    /**
-     * setAddress
-     * @param address the specified address of the user
-     */
-    public void setAddress(String address) {
-        this.address = address;
     }
 
 }

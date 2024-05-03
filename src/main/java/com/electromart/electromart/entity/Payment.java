@@ -5,18 +5,18 @@ import jakarta.persistence.*;
 /*
 @Entity
 @Table(name="payment")
-abstract class Payment {
+public abstract class Payment {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long paymentID;
 
     @JoinColumn(name="order_id")
-    @OneToOne
+    @OneToOne(mappedBy = "order_id")
     private Order orderID;
 
     private String paymentType;
-    private int paymentAmount;
+    private float paymentAmount;
     private String paymentDate;
     private String paymentStatus;
 
@@ -44,11 +44,11 @@ abstract class Payment {
         this.paymentType = paymentType;
     }
 
-    public int getPaymentAmount() {
+    public float getPaymentAmount() {
         return paymentAmount;
     }
 
-    public void setPaymentAmount(int paymentAmount) {
+    public void setPaymentAmount(float paymentAmount) {
         this.paymentAmount = paymentAmount;
     }
 
