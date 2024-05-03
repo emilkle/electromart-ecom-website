@@ -19,7 +19,7 @@ public class Order {
 
     public Order () {}
 
-    public Order (int orderID, User userID, String orderDate, String orderTotalAmount, String orderStatus) {
+    public Order (int orderID, User userID, String orderDate, float orderTotalAmount, String orderStatus) {
         this.orderID = orderID;
         this.userID = userID;
         this.orderDate = orderDate;

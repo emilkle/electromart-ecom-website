@@ -85,8 +85,11 @@ public abstract class Payment {
     @JoinColumn(name = "order_ID")
     private Order orderID;
 
+    @Column(name="payment_method")
+    private String paymentMethod;
+
     @Column(name = "payment_amount")
-    private int paymentAmount;
+    private float paymentAmount;
 
     @Column(name = "payment_date")
     private String paymentDate;
@@ -110,11 +113,11 @@ public abstract class Payment {
         this.orderID = orderID;
     }
 
-    public int getPaymentAmount() {
+    public float getPaymentAmount() {
         return paymentAmount;
     }
 
-    public void setPaymentAmount(int paymentAmount) {
+    public void setPaymentAmount(float paymentAmount) {
         this.paymentAmount = paymentAmount;
     }
 
@@ -132,5 +135,9 @@ public abstract class Payment {
 
     public void setPaymentStatus(String paymentStatus) {
         this.paymentStatus = paymentStatus;
+    }
+
+    public void setPaymentType(String method) {
+        this.paymentMethod = method;
     }
 }
