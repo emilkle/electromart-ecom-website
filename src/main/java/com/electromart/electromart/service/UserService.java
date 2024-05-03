@@ -17,4 +17,17 @@ public class UserService {
     public List<User> getAllUsers() {
         return userRepository.findAll();
     }
+
+
+    public long createNewUser () {
+        String email = "email from user input";
+        String password = "password from user input";
+        String firstName = "first name from input";
+        String lastName = "last name from input";
+
+        User user = new User(password,firstName,lastName,email);
+
+        return user.getUserId();
+    }
 }
+

@@ -11,7 +11,7 @@ public class Address {
 
     @ManyToOne
     @JoinColumn(name="user_id")
-    private User userid;
+    private User userID;
     private String address;
     private String postalCode;
     private String city;
@@ -19,8 +19,8 @@ public class Address {
 
     public Address () {}
 
-    public Address (User userid, String address, String postalCode, String city, String country) {
-        this.userid = userid;
+    public Address (User userID, String address, String postalCode, String city, String country) {
+        this.userID = userID;
         this.address = address;
         this.postalCode = postalCode;
         this.city = city;
