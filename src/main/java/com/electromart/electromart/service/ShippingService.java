@@ -1,5 +1,6 @@
 package com.electromart.electromart.service;
 
+import com.electromart.electromart.entity.Order;
 import com.electromart.electromart.entity.Shipping;
 import com.electromart.electromart.repository.ShippingRepository;
 import org.springframework.beans.factory.annotation.Autowired;
