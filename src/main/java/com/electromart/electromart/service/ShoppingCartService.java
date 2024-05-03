@@ -1,11 +1,8 @@
 package com.electromart.electromart.service;
-
 import com.electromart.electromart.entity.CartItem;
 import com.electromart.electromart.entity.Product;
-
 import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Collectors;
+
 
 public class ShoppingCartService {
 
