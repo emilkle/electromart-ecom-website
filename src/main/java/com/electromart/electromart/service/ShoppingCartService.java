@@ -38,6 +38,7 @@ public class ShoppingCartService {
                             indexArray = index;
                         }
                     this.shoppingCart.get(indexArray).setCartAmount(amount);
+                    addToCart = true;
                     }
 
                 }
@@ -53,6 +54,24 @@ public class ShoppingCartService {
         return addToCart;
 
     }
+
+    public boolean removeProductFromCart(Product product) {
+        boolean removedFromCart = false;
+        if (isProductInCart(product)) {
+            int indexArray = 0;
+            for (int i = 0; i < shoppingCart.size(); i++) {
+                if (shoppingCart.get(i).getCartItemID() == product.getProductId()) {
+                    indexArray = i;
+                }
+            }
+            this.shoppingCart.remove(indexArray);
+            removedFromCart = true;
+        }
+        return  removedFromCart;
+    }
+
+
+
 
     private boolean isProductInCart(Product product) {
         return  shoppingCart.stream().anyMatch(e -> e.getCartItemID() == product.getProductId());
