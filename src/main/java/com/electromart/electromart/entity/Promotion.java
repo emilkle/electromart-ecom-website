@@ -3,14 +3,14 @@ package com.electromart.electromart.entity;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name="promotion")
+@Table(name="Promotion")
 public class Promotion {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long promotionID;
 
     @ManyToOne
-    @JoinColumn(name="product_id")
+    @JoinColumn(name="product_ID")
     private Product productID;
 
     private String description;

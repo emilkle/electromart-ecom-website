@@ -3,18 +3,18 @@ package com.electromart.electromart.entity;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name="review")
+@Table(name="Review")
 public class ProductReview {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private String reviewID;
+    private int reviewID;
 
     @OneToOne
-    @JoinColumn(name="user_id")
+    @JoinColumn(name="user_ID")
     private User userID;
 
     @OneToOne
-    @JoinColumn(name="product_id")
+    @JoinColumn(name="product_ID")
     private Product productID;
 
     private int rating;
@@ -33,11 +33,11 @@ public class ProductReview {
         this.reviewDate = reviewDate;
     }
 
-    public String getReviewID() {
+    public int getReviewID() {
         return reviewID;
     }
 
-    public void setReviewID(String reviewID) {
+    public void setReviewID(int reviewID) {
         this.reviewID = reviewID;
     }
 

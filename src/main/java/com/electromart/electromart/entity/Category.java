@@ -3,11 +3,11 @@ package com.electromart.electromart.entity;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name="category")
+@Table(name="Category")
 public class Category {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long categoryId;
+    private int categoryId;
 
     private String name;
 
@@ -22,11 +22,11 @@ public class Category {
         this.description = description;
     }
 
-    public Long getCategoryId() {
+    public int getCategoryId() {
         return categoryId;
     }
 
-    public void setCategoryId(Long categoryId) {
+    public void setCategoryId(int categoryId) {
         this.categoryId = categoryId;
     }
 

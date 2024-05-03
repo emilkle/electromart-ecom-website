@@ -24,10 +24,16 @@ public class BrandController {
     }
 
     @GetMapping("/brand_id={id}")
-    public ResponseEntity<String> fetchBrandName(@PathVariable("id") Long id){
-        Optional <String> brandNameParam = brandService.getNameByID(id);
-        return brandNameParam.map(ResponseEntity::ok)
-            .orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND)
+    public ResponseEntity<String> fetchBrandName(@PathVariable("id") Long id) {
+        if (id != null) {
+            Optional<String> brandNameParam = brandService.getNameByID(id);
+            return brandNameParam.map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND)
                     .body("The brand with id " + id + " Was not found"));
+        }
+        else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                .body("No id was specified.");
+        }
     }
 }

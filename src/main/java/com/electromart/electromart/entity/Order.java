@@ -3,14 +3,14 @@ package com.electromart.electromart.entity;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name="order")
+@Table(name="Order")
 public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private String orderID;
+    private int orderID;
 
     @OneToOne
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "user_ID")
     private User userID;
 
     private String orderDate;
@@ -19,7 +19,7 @@ public class Order {
 
     public Order () {}
 
-    public Order (String orderID, User userID, String orderDate, float orderTotalAmount, String orderStatus) {
+    public Order (int orderID, User userID, String orderDate, String orderTotalAmount, String orderStatus) {
         this.orderID = orderID;
         this.userID = userID;
         this.orderDate = orderDate;
