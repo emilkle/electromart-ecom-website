@@ -89,6 +89,17 @@ public class ShoppingCartService {
         return totalAmount;
     }
 
+    /**
+     *  empties shoppingcart
+     * @return boolean to communicate empty check complete
+     */
+    public boolean emptyShoppingCart() {
+        if (!shoppingCart.isEmpty()) {
+            shoppingCart.clear();
+        }
+        return true;
+
+    }
 
     private boolean isProductInCart(Product product) {
         return  shoppingCart.stream().anyMatch(e -> e.getCartItemID() == product.getProductId());
