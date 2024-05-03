@@ -3,14 +3,14 @@ package com.electromart.electromart.entity;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name="shipping")
+@Table(name="Shipping")
 public class Shipping {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private String shippingID;
+    private int shippingID;
 
     @OneToOne
-    @JoinColumn(name = "order_id")
+    @JoinColumn(name = "order_ID")
     private Order orderID;
 
     private String shippingMethod;
@@ -24,11 +24,11 @@ public class Shipping {
         this.shippingCost = shippingCost;
     }
 
-    public String getShippingID() {
+    public int getShippingID() {
         return shippingID;
     }
 
-    public void setShippingID(String shippingID) {
+    public void setShippingID(int shippingID) {
         this.shippingID = shippingID;
     }
 

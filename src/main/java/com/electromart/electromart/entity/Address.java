@@ -3,15 +3,15 @@ package com.electromart.electromart.entity;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name="address")
+@Table(name="Address")
 public class Address {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long addressID;
+    private int addressID;
 
     @ManyToOne
-    @JoinColumn(name="user_id")
-    private User userid;
+    @JoinColumn(name="user_ID")
+    private User userID;
     private String address;
     private String postalCode;
     private String city;
@@ -20,7 +20,7 @@ public class Address {
     public Address () {}
 
     public Address (User userid, String address, String postalCode, String city, String country) {
-        this.userid = userid;
+        this.userID = userid;
         this.address = address;
         this.postalCode = postalCode;
         this.city = city;
