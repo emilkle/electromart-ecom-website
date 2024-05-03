@@ -25,9 +25,8 @@ public class CartItem {
     }
 
     public long getCartItemID() {return product.getProductId();}
-    //public long getCartItemID(Product product) {
-    //    return product.getProductId();
-    //}
+
+    public float getCartItemPrice() { return product.getPrice();}
 
 
 }

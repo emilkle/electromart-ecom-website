@@ -55,6 +55,11 @@ public class ShoppingCartService {
 
     }
 
+    /**
+     * Removes product from cart
+     * @param product Assumes valid product for now
+     * @return boolean if removal is performed or not performed.
+     */
     public boolean removeProductFromCart(Product product) {
         boolean removedFromCart = false;
         if (isProductInCart(product)) {
@@ -70,12 +75,23 @@ public class ShoppingCartService {
         return  removedFromCart;
     }
 
-
+    /**
+     * Calculates total price of products in cart
+     * @return float total price of products in cart
+     */
+    public float cartTotalPrice() {
+        float totalAmount = 0;
+        if (!shoppingCart.isEmpty()) {
+            for (int i = 0; i < shoppingCart.size(); i++) {
+                totalAmount += shoppingCart.get(i).getCartItemPrice();
+            }
+        }
+        return totalAmount;
+    }
 
 
     private boolean isProductInCart(Product product) {
         return  shoppingCart.stream().anyMatch(e -> e.getCartItemID() == product.getProductId());
-
     }
 
 }
