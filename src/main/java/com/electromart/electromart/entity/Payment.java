@@ -79,7 +79,7 @@ public abstract class Payment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "payment_ID")
-    private long paymentID;
+    private int paymentID;
 
     @ManyToOne
     @JoinColumn(name = "order_ID")
@@ -101,7 +101,7 @@ public abstract class Payment {
         return paymentID;
     }
 
-    public void setPaymentID(long paymentID) {
+    public void setPaymentID(int paymentID) {
         this.paymentID = paymentID;
     }
 
