@@ -2,12 +2,16 @@ package com.electromart.electromart.entity;
 
 import jakarta.persistence.*;
 
+/**
+ * The Category class represents the category entities that are stored in the database.
+ */
 @Entity
 @Table(name="Category")
 public class Category {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int categoryId;
+    @Column(name="category_ID")
+    private Long categoryId;
 
     private String name;
 
@@ -22,11 +26,11 @@ public class Category {
         this.description = description;
     }
 
-    public int getCategoryId() {
+    public Long getCategoryId() {
         return categoryId;
     }
 
-    public void setCategoryId(int categoryId) {
+    public void setCategoryId(Long categoryId) {
         this.categoryId = categoryId;
     }
 
