@@ -1,6 +1,7 @@
 package com.electromart.electromart.service;
 
 import com.electromart.electromart.dto.CategoryDTO;
+import com.electromart.electromart.entity.Brand;
 import com.electromart.electromart.entity.Category;
 import com.electromart.electromart.repository.CategoryRepository;
 import org.springframework.beans.BeanUtils;
@@ -20,12 +21,14 @@ import java.util.stream.Collectors;
 public class CategoryService {
 
     private final CategoryRepository categoryRepository;
+
     public CategoryService(CategoryRepository categoryRepository) {
         this.categoryRepository = categoryRepository;
     }
 
     /**
      * Fetches all categories that is stored in the database.
+     *
      * @return a list of categoryDTO objects corresponding to all the categories that are stored in the database.
      */
     public List<CategoryDTO> getAllCategories() {
@@ -34,12 +37,13 @@ public class CategoryService {
         // Goes through the list of categories and converts each category object to categoryDTO objects.
         // Then it collect and return all the converted categories in a list.
         return categories.stream()
-                .map(category -> convertToDTO(category))
-                .collect(Collectors.toList());
+            .map(category -> convertToDTO(category))
+            .collect(Collectors.toList());
     }
 
     /**
      * Adds a new category to the database by using a categoryDTO object.
+     *
      * @param categoryDTO The categoryDTO object representing the category to be added.
      * @return A categoryDTO representation of the added category.
      */
@@ -54,9 +58,10 @@ public class CategoryService {
 
     /**
      * Fetches a specific categoryDTO based on the categoryID.
+     *
      * @param id The categoryID of the desired category.
      * @return A categoryDTO that matches the specified categoryID,
-       or an empty optional if no category with the specified categoryID was found.
+     * or an empty optional if no category with the specified categoryID was found.
      */
     public Optional<CategoryDTO> getCategoryById(Long id) {
         Optional<Category> optionalCategory = categoryRepository.findById(id);
@@ -65,6 +70,7 @@ public class CategoryService {
 
     /**
      * Deletes a category object from the database based on a specified categoryID.
+     *
      * @param id The specified categoryID of the category to be deleted.
      * @throws ResponseStatusException with HttpStatus.NOT_FOUND if no categories with the specified ID are found.
      */
@@ -73,9 +79,29 @@ public class CategoryService {
         if (categoryRepository.existsById(id)) {
             categoryRepository.deleteById(id);
         } else {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Category not found with ID: " + id);
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND,
+                "Category not found with ID: " + id);
         }
     }
+
+    /**
+     * Retrieves the description of a category by its name from the repository.
+     *
+     * @param name the name of the category to retrieve the description for
+     * @return an Optional containing the description of the category if found,
+     *         or an empty Optional if the category is not found
+     */
+    public Optional<String> getDescriptionFromName(String name) {
+        // Retrieves a category with the specified name from the repository
+        Optional<Category> categoryParam = categoryRepository.findAll()
+            .stream()
+            .filter(category -> category.getName().equals(name))
+            .findFirst();
+
+        // Maps the category to its description if found
+        return categoryParam.map(Category::getDescription);
+    }
+
 
     /**
      * Converts categoryDTO object into a category entity object.
