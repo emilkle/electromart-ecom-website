@@ -1,43 +1,47 @@
-package com.electromart.electromart.entity;
+package com.electromart.electromart.dto;
 
-import jakarta.persistence.*;
+import com.electromart.electromart.entity.User;
 
 /**
- * The Address class represents all the address entities that are stored in the database.
+ * Data Transfer Object for the (DTO) for address data.
+ * It is used to encapsulate the address data that is transferred
+ between the AddressService and the AddressController.
+ * This ensures that the service layer are not directly interacting with the database.
  */
-@Entity
-@Table(name="Address")
-public class Address {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="address_ID")
-    private Long addressID;
+public class AddressDTO {
 
-    @ManyToOne
-    @JoinColumn(name="user_ID")
+    private Long addressID;
     private User userID;
     private String address;
     private String postalCode;
     private String city;
     private String country;
 
-    public Address () {}
+    public AddressDTO() {}
 
-    public Address (User userid, String address, String postalCode, String city, String country) {
-        this.userID = userid;
+    public AddressDTO(Long addressID, User userID, String address, String postalCode, String city, String country) {
+        this.addressID = addressID;
+        this.userID = userID;
         this.address = address;
         this.postalCode = postalCode;
         this.city = city;
         this.country = country;
-
     }
 
-    public long getAddressID() {
+    public Long getAddressID() {
         return addressID;
     }
 
     public void setAddressID(Long addressID) {
         this.addressID = addressID;
+    }
+
+    public User getUserID() {
+        return userID;
+    }
+
+    public void setUserID(User userID) {
+        this.userID = userID;
     }
 
     public String getAddress() {

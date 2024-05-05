@@ -1,4 +1,4 @@
-package com.electromart.electromart.Controller;
+package com.electromart.electromart.controller;
 
 import com.electromart.electromart.entity.Product;
 import com.electromart.electromart.service.ProductService;
@@ -17,5 +17,4 @@ public class ProductController {
     public List<Product> fetchAllProducts() {
         return productService.getAllProducts();
     }
-
 }

@@ -1,27 +1,21 @@
-package com.electromart.electromart.entity;
-
-import jakarta.persistence.*;
+package com.electromart.electromart.dto;
 
 /**
- * The Category class represents the category entities that are stored in the database.
+ * Data Transfer Object for the (DTO) for category data.
+ * It is used to encapsulate the category data that is transferred
+   between the CategoryService and the CategoryController.
+ * This ensures that the service layer are not directly interacting with the database.
  */
-@Entity
-@Table(name="Category")
-public class Category {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="category_ID")
+public class CategoryDTO {
+
     private Long categoryID;
-
     private String name;
-
     private String description;
 
-    public Category() {
+    public CategoryDTO() {}
 
-    }
-
-    public Category(String name, String description) {
+    public CategoryDTO(Long categoryID, String name, String description) {
+        this.categoryID = categoryID;
         this.name = name;
         this.description = description;
     }
@@ -50,4 +44,3 @@ public class Category {
         this.description = description;
     }
 }
-

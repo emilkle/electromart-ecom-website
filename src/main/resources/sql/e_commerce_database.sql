@@ -253,7 +253,7 @@ ALTER TABLE `Brand`
 -- Indexes for table `Category`
 --
 ALTER TABLE `Category`
-  ADD PRIMARY KEY (`category_ID`);
+    MODIFY `category_ID` INT AUTO_INCREMENT PRIMARY KEY;
 
 --
 -- Indexes for table `CreditCard`
