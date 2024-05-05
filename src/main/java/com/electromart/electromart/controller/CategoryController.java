@@ -21,8 +21,10 @@ import java.util.Optional;
 @RequestMapping("/category")
 public class CategoryController {
 
-    @Autowired
-    private CategoryService categoryService;
+    //@Autowired
+    //private CategoryService categoryService;
+
+    private final CategoryService categoryService;
 
     public CategoryController(CategoryService categoryService) {
         this.categoryService = categoryService;

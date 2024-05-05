@@ -21,8 +21,13 @@ import java.util.stream.Collectors;
 @Service
 public class CategoryService {
 
-    @Autowired
-    private CategoryRepository categoryRepository;
+    //@Autowired
+    //private CategoryRepository categoryRepository;
+
+    private final CategoryRepository categoryRepository;
+    public CategoryService(CategoryRepository categoryRepository) {
+        this.categoryRepository = categoryRepository;
+    }
 
     /**
      * Fetches all categories that is stored in the database.
@@ -34,7 +39,7 @@ public class CategoryService {
         // Goes through the list of categories and converts each category object to categoryDTO objects.
         // Then it collect and return all the converted categories in a list.
         return categories.stream()
-                .map(this::convertToDTO)
+                .map(category -> convertToDTO(category))
                 .collect(Collectors.toList());
     }
 
@@ -64,6 +69,20 @@ public class CategoryService {
     }
 
     /**
+     * Deletes a category object from the database based on a specified categoryID.
+     * @param id The specified categoryID of the category to be deleted.
+     * @throws ResponseStatusException with HttpStatus.NOT_FOUND if no categories with the specified ID are found.
+     */
+    public void deleteCategory(Long id) {
+        // Check if any category with the specified ID exist.
+        if (categoryRepository.existsById(id)) {
+            categoryRepository.deleteById(id);
+        } else {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Category not found with ID: " + id);
+        }
+    }
+
+    /**
      * Converts categoryDTO object into a category entity object.
      * @param category The category object to convert.
      * @return  The converted category object.
@@ -87,19 +106,5 @@ public class CategoryService {
         // Using BeanUtils library for copying the values in the categoryDTO to the category.
         BeanUtils.copyProperties(categoryDTO, category);
         return category;
-    }
-
-    /**
-     * Deletes a category object from the database based on a specified categoryID.
-     * @param id The specified categoryID of the category to be deleted.
-     * @throws ResponseStatusException with HttpStatus.NOT_FOUND if no categories with the specified ID are found.
-     */
-    public void deleteCategory(Long id) {
-        // Check if any category with the specified ID exist.
-        if (categoryRepository.existsById(id)) {
-            categoryRepository.deleteById(id);
-        } else {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Category not found with ID: " + id);
-        }
     }
 }
