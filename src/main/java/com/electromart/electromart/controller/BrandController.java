@@ -1,13 +1,20 @@
 package com.electromart.electromart.controller;
 
 import com.electromart.electromart.entity.Brand;
+import com.electromart.electromart.entity.Product;
 import com.electromart.electromart.repository.BrandRepository;
+import com.electromart.electromart.repository.ProductRepository;
 import com.electromart.electromart.service.BrandService;
+import com.electromart.electromart.service.ProductService;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -24,10 +31,13 @@ public class BrandController {
 
     @Autowired
     private BrandService brandService;
-    private BrandRepository repository;
+    private BrandRepository brandRepository;
+    private ProductRepository productRepository;
+    @Autowired
+    private ProductService productService;
 
     BrandController(BrandRepository repository) {
-        this.repository = repository;
+        this.brandRepository = repository;
     }
 
     /**
@@ -91,11 +101,43 @@ public class BrandController {
     public ResponseEntity<String> addNewBrand(@RequestBody Brand brandRequest) {
         if (!isValidDataTypes(brandRequest)) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid " +
-                "payload in the POST request");
+                "payload in the POST request.");
         } else {
-            repository.save(brandRequest);
+            brandRepository.save(brandRequest);
             return ResponseEntity.status(HttpStatus.CREATED).body("The requested brand was " +
-                "created successfully");
+                "created successfully.");
+        }
+    }
+
+    /**
+     * Delete brand response entity.
+     *
+     * @param id the id
+     * @return the response entity
+     */
+    @DeleteMapping("/brand_id={id}")
+    public ResponseEntity<String> deleteBrand(@PathVariable(
+        value = "id", required = false) Long id) {
+        if (id == null || id <= 0) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid " +
+                "id in the DELETE request.");
+        } else {
+            try {
+                List<Product> products = productService.findProductFromBrandId(id);
+                for (Product product : products) {
+                    productRepository.deleteById(product.getProductId());
+                }
+                brandRepository.deleteById(id);
+                return ResponseEntity.status(HttpStatus.NO_CONTENT)
+                    .body("The requested brand was " +
+                        "deleted successfully.");
+            } catch (EmptyResultDataAccessException e) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body("Brand with ID " + id + " not found.");
+            } catch (DataIntegrityViolationException e) {
+                return ResponseEntity.status(HttpStatus.CONFLICT)
+                    .body("Cannot delete brand because it has associated products.");
+            }
         }
     }
 

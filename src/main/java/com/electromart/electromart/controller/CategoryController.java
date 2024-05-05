@@ -31,7 +31,7 @@ public class CategoryController {
      * @return A list with all the categories in the database.
      * @throws ResponseStatusException with HttpStatus.NOT_FOUND if no categories are found.
      */
-    @GetMapping("")
+    @GetMapping({"", "/"})
     public List<CategoryDTO> fetchAllCategories() {
         List<CategoryDTO> categories = categoryService.getAllCategories();
         if (categories.isEmpty()) {
@@ -60,7 +60,7 @@ public class CategoryController {
      * @param id The categoryID of the desired category.
      * @return ResponseEntity containing the categoryDTO if found and HTTP status OK, otherwise NOT_FOUND.
      */
-    @GetMapping("/{id}")
+    @GetMapping("/category_id={id}")
     // Return type set to "?" for flexible return type in case the desired category does not exist and
     // a category not found message needs to be returned.
     public ResponseEntity<?> getCategoryById(@PathVariable Long id) {
@@ -73,6 +73,33 @@ public class CategoryController {
         } else {
             // If the category does not exist, return HTTP status code NOT_FOUND
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Category with ID: '" + id + "' not found");
+        }
+    }
+
+    /**
+     * Retrieves the description of a category by its name.
+     *
+     * @param name the name of the category
+     * @return a ResponseEntity containing the description of the category if found,
+     *         or an error response if the category is not found or the name parameter is empty
+     */
+    @GetMapping("/name={name}")
+    public ResponseEntity<String> getCategoryDescription(@PathVariable(value = "name",
+        required = false) String name) {
+        // Retrieves the description of the category based on its name
+        Optional<String> categoryNameParam = categoryService.getDescriptionFromName(name);
+
+        // Checks if a valid category name is provided
+        if (!name.isEmpty()) {
+            // Returns the category description if found, or a not found response otherwise
+            return categoryNameParam.map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body("The category with name " + name + " was not found"));
+        } else {
+            // Returns a bad request response if no valid category name is specified
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body("No valid category name was specified. To add a new category " +
+                    "use the HTTP POST method.");
         }
     }
 
