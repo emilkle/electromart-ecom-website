@@ -55,10 +55,15 @@ public class Inventory {
 @Entity
 @Table(name="Inventory")
 public class Inventory {
-    @EmbeddedId
-    private InventoryId id;
+    //@EmbeddedId
+    //private InventoryId id;
 
-    @MapsId("productID")
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name="inventory_ID")
+    private Long inventoryID;
+
+    //@MapsId("productID")
     @OneToOne
     @JoinColumn(name = "product_ID")
     private Product product;
@@ -68,19 +73,18 @@ public class Inventory {
 
     public Inventory() {}
 
-    public Inventory(InventoryId id, Product product, int quantity, String lastRestockDate) {
-        this.id = id;
+    public Inventory(Product product, int quantity, String lastRestockDate) {
         this.product = product;
         this.quantity = quantity;
         this.lastRestockDate = lastRestockDate;
     }
 
-    public InventoryId getId() {
-        return id;
+    public Long getId() {
+        return inventoryID;
     }
 
-    public void setId(InventoryId id) {
-        this.id = id;
+    public void setId(Long id) {
+        this.inventoryID = id;
     }
 
     public Product getProduct() {

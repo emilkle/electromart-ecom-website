@@ -8,44 +8,44 @@ package com.electromart.electromart.dto;
  */
 public class OrderDTO {
 
-    private int orderId;
-    private int customerId;
-    private int productId;
+    private Long orderID;
+    private Long userID;
+    private int productID;
     private int quantity;
     private double price;
 
     public OrderDTO() {}
 
-    public OrderDTO(int orderId, int customerId, int productId, int quantity, double price) {
-        this.orderId = orderId;
-        this.customerId = customerId;
-        this.productId = productId;
+    public OrderDTO(Long orderId, Long userId, int productId, int quantity, double price) {
+        this.orderID = orderId;
+        this.userID = userId;
+        this.productID = productId;
         this.quantity = quantity;
         this.price = price;
     }
 
-    public int getOrderId() {
-        return orderId;
+    public Long getOrderId() {
+        return orderID;
     }
 
-    public void setOrderId(int orderId) {
-        this.orderId = orderId;
+    public void setOrderId(Long orderId) {
+        this.orderID = orderId;
     }
 
-    public int getCustomerId() {
-        return customerId;
+    public Long getCustomerId() {
+        return userID;
     }
 
-    public void setCustomerId(int customerId) {
-        this.customerId = customerId;
+    public void setCustomerId(Long customerId) {
+        this.userID = customerId;
     }
 
     public int getProductId() {
-        return productId;
+        return productID;
     }
 
     public void setProductId(int productId) {
-        this.productId = productId;
+        this.productID = productId;
     }
 
     public int getQuantity() {

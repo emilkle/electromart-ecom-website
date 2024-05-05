@@ -1,6 +1,9 @@
 package com.electromart.electromart.service;
+
 import com.electromart.electromart.entity.CartItem;
 import com.electromart.electromart.entity.Product;
+import com.electromart.electromart.repository.InventoryRepository;
+
 import java.util.ArrayList;
 
 
@@ -10,11 +13,16 @@ public class ShoppingCartService {
     private final ArrayList<CartItem> shoppingCart = new ArrayList<>();
 
     // assign to inventory service?
-    private final InventoryService is = new InventoryService();
+    //private final InventoryService is = new InventoryService();
 
-    public ShoppingCartService () {
+    //REFACTORED
+    // Not sure if its best practice to instantiate a new InventoryService outside a controller class.
+    private final InventoryService inventoryService;
 
+    public ShoppingCartService(InventoryService inventoryService) {
+        this.inventoryService = inventoryService;
     }
+
     //Need to implement updateQuantityCart, check item in shoppingCart
 
     /**
@@ -29,7 +37,7 @@ public class ShoppingCartService {
         long productID = product.getProductId();
         try {
             //Check if productID, amount is valid
-            if (is.checkInventoryQuantity(productID, amount)){
+            if (inventoryService.checkInventoryQuantity(productID, amount)){
                 //Check if item is in cart
                 if (isProductInCart(product)){
                     int indexArray = 0;

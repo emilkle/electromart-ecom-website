@@ -6,11 +6,12 @@ import jakarta.persistence.*;
  * The Order class represents the order entities that are stored in the database.
  */
 @Entity
-@Table(name="Order")
+@Table(name="`Order`")
 public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int orderID;
+    @Column(name="order_ID")
+    private Long orderID;
 
     @OneToOne
     @JoinColumn(name = "user_ID")
@@ -22,19 +23,18 @@ public class Order {
 
     public Order () {}
 
-    public Order (int orderID, User userID, String orderDate, float orderTotalAmount, String orderStatus) {
-        this.orderID = orderID;
+    public Order (User userID, String orderDate, float orderTotalAmount, String orderStatus) {
         this.userID = userID;
         this.orderDate = orderDate;
         this.orderTotalAmount = orderTotalAmount;
         this.orderStatus = orderStatus;
     }
 
-    public int getOrderID() {
+    public Long getOrderID() {
         return orderID;
     }
 
-    public void setOrderID(int orderID) {
+    public void setOrderID(Long orderID) {
         this.orderID = orderID;
     }
 

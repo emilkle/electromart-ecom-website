@@ -9,33 +9,35 @@ import com.electromart.electromart.entity.Product;
  * This ensures that the service layer are not directly interacting with the database.
  */
 public class InventoryDTO {
-    private int inventoryID;
-    private Product product;
+    private Long inventoryID;
+    //private Product product;
+    private Long productID;
     private int quantity;
     private String lastRestockDate;
 
     public InventoryDTO() {}
 
-    public InventoryDTO(int inventoryID, Product product, int quantity, String lastRestockDate) {
+    public InventoryDTO(Long inventoryID, Long productID, int quantity, String lastRestockDate) {
         this.inventoryID = inventoryID;
-        this.product = product;
+        this.productID = productID;
         this.quantity = quantity;
+        this.lastRestockDate = lastRestockDate;
     }
 
-    public int getInventoryID() {
+    public Long getInventoryID() {
         return inventoryID;
     }
 
-    public void setInventoryID(int inventoryID) {
+    public void setInventoryID(Long inventoryID) {
         this.inventoryID = inventoryID;
     }
 
-    public Product getProduct() {
-        return product;
+    public Long getProduct() {
+        return productID;
     }
 
-    public void setProduct(Product product) {
-        this.product = product;
+    public void setProduct(Long product) {
+        this.productID = product;
     }
 
     public int getQuantity() {
