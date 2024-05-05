@@ -3,7 +3,6 @@ package com.electromart.electromart.controller;
 import com.electromart.electromart.dto.AddressDTO;
 import com.electromart.electromart.service.AddressService;
 import jakarta.persistence.EntityNotFoundException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -11,12 +10,15 @@ import org.springframework.web.server.ResponseStatusException;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * RestController for managing addresses in the database.
+ * The controller utilize methods from the AddressService to interact with the database.
+ * It provides the application with endpoints used for HTTP GET, POST and DELETE requests,
+ with corresponding endpoints for each request method.
+ */
 @RestController
 @RequestMapping("/address")
 public class AddressController {
-
-    //@Autowired
-    //private AddressService addressService;
 
     private final AddressService addressService;
 

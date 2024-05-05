@@ -2,6 +2,12 @@ package com.electromart.electromart.dto;
 
 import com.electromart.electromart.entity.User;
 
+/**
+ * Data Transfer Object for the (DTO) for address data.
+ * It is used to encapsulate the address data that is transferred
+ between the AddressService and the AddressController.
+ * This ensures that the service layer are not directly interacting with the database.
+ */
 public class AddressDTO {
 
     private Long addressID;

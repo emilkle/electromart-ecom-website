@@ -3,7 +3,6 @@ package com.electromart.electromart.controller;
 import com.electromart.electromart.dto.CategoryDTO;
 import com.electromart.electromart.service.CategoryService;
 import jakarta.persistence.EntityNotFoundException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -20,9 +19,6 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/category")
 public class CategoryController {
-
-    //@Autowired
-    //private CategoryService categoryService;
 
     private final CategoryService categoryService;
 
