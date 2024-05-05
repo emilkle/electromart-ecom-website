@@ -32,12 +32,13 @@ public class OrderController {
      * @throws ResponseStatusException with HttpStatus.NOT_FOUND if no orders are found.
      */
     @GetMapping("")
-    public List<OrderDTO> fetchAllOrders() {
+    public ResponseEntity<?> fetchAllOrders() {
         List<OrderDTO> orders = orderService.getAllOrders();
+        // If no orders exist return HTTP status code OK and message
         if (orders.isEmpty()) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No orders found");
+            return ResponseEntity.status(HttpStatus.OK).body("The system does not contain any orders.");
         } else {
-            return orders;
+            return new ResponseEntity<>(orders, HttpStatus.OK);
         }
     }
 

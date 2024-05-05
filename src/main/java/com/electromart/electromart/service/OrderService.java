@@ -31,9 +31,6 @@ public class OrderService {
      */
     public List<OrderDTO> getAllOrders() {
         // Fetches all the orders and store them in a list.
-        if (orderRepository.findAll().isEmpty()) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No orders found");
-        }
         List<Order> orders = orderRepository.findAll();
         // Goes through the list of orders and converts each order object to orderDTO objects.
         // Then it collect and return all the converted orders in a list.
