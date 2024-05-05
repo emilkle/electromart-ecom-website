@@ -7,6 +7,7 @@ import jakarta.persistence.*;
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name="product_ID")
     private Long productId;
 
     @ManyToOne
