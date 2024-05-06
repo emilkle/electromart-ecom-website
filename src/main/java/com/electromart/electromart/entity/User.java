@@ -52,7 +52,7 @@ public class User {
      * getUserID
      * @return userID
      */
-    public long getUserId() {
+    public Long getUserId() {
         return user_Id;
     }
 
@@ -60,7 +60,7 @@ public class User {
      * setUserID
      * @param userId the specified userID
      */
-    public void setUserId(long userId) {
+    public void setUserId(Long userId) {
         this.user_Id = userId;
     }
 

@@ -1,8 +1,6 @@
 package com.electromart.electromart.service;
 
-import com.electromart.electromart.dto.AddressDTO;
 import com.electromart.electromart.dto.UserDTO;
-import com.electromart.electromart.entity.Address;
 import com.electromart.electromart.entity.User;
 import com.electromart.electromart.repository.UserRepository;
 import org.springframework.beans.BeanUtils;
