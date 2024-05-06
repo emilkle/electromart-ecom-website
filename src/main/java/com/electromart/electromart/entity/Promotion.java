@@ -1,28 +1,30 @@
 package com.electromart.electromart.entity;
 
 import jakarta.persistence.*;
+import java.sql.Date;
 
 @Entity
 @Table(name="Promotion")
 public class Promotion {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long promotionID;
+    @Column(name="promotion_ID")
+    private Long promotionID;
 
     @ManyToOne
     @JoinColumn(name="product_ID")
-    private Product productID;
-
+    private Product product;
     private String description;
     private String discountType;
     private float discountValue;
-    private String startDate;
-    private String endDate;
+    private Date startDate;
+    private Date endDate;
 
     public Promotion () {}
 
-    public Promotion(Product product, String description, String discountType, int discountValue, String startDate, String endDate) {
-        this.productID = product;
+    public Promotion(Product product, String description, String discountType, int discountValue,
+                     Date startDate, Date endDate) {
+        this.product = product;
         this.description = description;
         this.discountType = discountType;
         this.discountValue = discountValue;
@@ -36,6 +38,14 @@ public class Promotion {
 
     public void setPromotionID(long promotionID) {
         this.promotionID = promotionID;
+    }
+
+    public Product getProduct() {
+        return product;
+    }
+
+    public void setProduct(Product product) {
+        this.product = product;
     }
 
     public String getDescription() {
@@ -62,19 +72,19 @@ public class Promotion {
         this.discountValue = discountValue;
     }
 
-    public String getStartDate() {
+    public Date getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(String startDate) {
+    public void setStartDate(Date startDate) {
         this.startDate = startDate;
     }
 
-    public String getEndDate() {
+    public Date getEndDate() {
         return endDate;
     }
 
-    public void setEndDate(String endDate) {
+    public void setEndDate(Date endDate) {
         this.endDate = endDate;
     }
 }
