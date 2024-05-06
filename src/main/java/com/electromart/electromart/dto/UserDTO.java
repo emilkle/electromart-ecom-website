@@ -14,10 +14,11 @@ public class UserDTO {
 
     public UserDTO(Long userID, String password, String email, String firstName, String lastName) {
         this.userID = userID;
-        this.password = password;
-        this.email = email;
         this.firstName = firstName;
         this.lastName = lastName;
+        this.email = email;
+        this.password = password;
+
     }
 
     public Long getUserID() {
