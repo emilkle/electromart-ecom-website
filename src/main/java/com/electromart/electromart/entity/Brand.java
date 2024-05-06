@@ -3,10 +3,11 @@ package com.electromart.electromart.entity;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name="brand")
+@Table(name="`Brand`")
 public class Brand {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name="brand_ID")
     private Long brandId;
 
     private String name;

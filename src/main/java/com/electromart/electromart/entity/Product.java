@@ -2,13 +2,16 @@ package com.electromart.electromart.entity;
 
 import jakarta.persistence.*;
 
+/**
+ * The Product class represents the product entities that are stored in the database.
+ */
 @Entity
 @Table(name="Product")
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="product_ID")
-    private Long productId;
+    private Long productID;
 
     @ManyToOne
     @JoinColumn(name = "brand_ID")
@@ -37,11 +40,11 @@ public class Product {
     }
 
     public Long getProductId() {
-        return productId;
+        return productID;
     }
 
     public void setProductId(Long productId) {
-        this.productId = productId;
+        this.productID = productId;
     }
 
     public Brand getBrand() {

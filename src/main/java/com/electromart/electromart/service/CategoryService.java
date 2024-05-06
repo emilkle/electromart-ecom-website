@@ -1,7 +1,6 @@
 package com.electromart.electromart.service;
 
 import com.electromart.electromart.dto.CategoryDTO;
-import com.electromart.electromart.entity.Brand;
 import com.electromart.electromart.entity.Category;
 import com.electromart.electromart.repository.CategoryRepository;
 import org.springframework.beans.BeanUtils;
@@ -28,7 +27,6 @@ public class CategoryService {
 
     /**
      * Fetches all categories that is stored in the database.
-     *
      * @return a list of categoryDTO objects corresponding to all the categories that are stored in the database.
      */
     public List<CategoryDTO> getAllCategories() {
@@ -43,7 +41,6 @@ public class CategoryService {
 
     /**
      * Adds a new category to the database by using a categoryDTO object.
-     *
      * @param categoryDTO The categoryDTO object representing the category to be added.
      * @return A categoryDTO representation of the added category.
      */
@@ -58,7 +55,6 @@ public class CategoryService {
 
     /**
      * Fetches a specific categoryDTO based on the categoryID.
-     *
      * @param id The categoryID of the desired category.
      * @return A categoryDTO that matches the specified categoryID,
      * or an empty optional if no category with the specified categoryID was found.

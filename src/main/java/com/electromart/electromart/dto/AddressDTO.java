@@ -11,7 +11,7 @@ import com.electromart.electromart.entity.User;
 public class AddressDTO {
 
     private Long addressID;
-    private User userID;
+    private Long userID;
     private String address;
     private String postalCode;
     private String city;
@@ -19,7 +19,7 @@ public class AddressDTO {
 
     public AddressDTO() {}
 
-    public AddressDTO(Long addressID, User userID, String address, String postalCode, String city, String country) {
+    public AddressDTO(Long addressID, Long userID, String address, String postalCode, String city, String country) {
         this.addressID = addressID;
         this.userID = userID;
         this.address = address;
@@ -36,11 +36,11 @@ public class AddressDTO {
         this.addressID = addressID;
     }
 
-    public User getUserID() {
+    public Long getUserID() {
         return userID;
     }
 
-    public void setUserID(User userID) {
+    public void setUserID(Long userID) {
         this.userID = userID;
     }
 

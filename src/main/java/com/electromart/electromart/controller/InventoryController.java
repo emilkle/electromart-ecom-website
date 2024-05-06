@@ -10,6 +10,12 @@ import org.springframework.web.server.ResponseStatusException;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * RestController for managing the inventory in the database.
+ * The controller utilize methods from the InventoryService to interact with the database.
+ * It provides the application with endpoints used for HTTP GET, POST and DELETE requests,
+ with corresponding endpoints for each request method.
+ */
 @RestController
 @RequestMapping("/inventory")
 public class InventoryController {
@@ -26,12 +32,12 @@ public class InventoryController {
      * @throws ResponseStatusException with HttpStatus.NOT_FOUND if no inventory items are found.
      */
     @GetMapping("")
-    public List<InventoryDTO> fetchAllInventoryItems() {
+    public ResponseEntity<?> fetchAllInventoryItems() {
         List<InventoryDTO> inventoryItems = inventoryService.getAllInventoryItems();
         if (inventoryItems.isEmpty()) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No inventory items found");
+            return ResponseEntity.status(HttpStatus.OK).body("The system does not contain any inventory items.");
         } else {
-            return inventoryItems;
+            return new ResponseEntity<>(inventoryItems, HttpStatus.OK);
         }
     }
 

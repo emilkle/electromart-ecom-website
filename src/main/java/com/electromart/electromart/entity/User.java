@@ -12,7 +12,7 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="user_ID")
-    private long user_Id;
+    private Long user_Id;
 
     //@Column(nullable = false, length = 64)
     private String password;
@@ -36,23 +36,23 @@ public class User {
 
     /**
      * Constructor no 2 with arguments for the User entity.
-     * @param firstName the users first name
-     * @param lastName last name of user
      * @param password the users password
      * @param email the users email address
+     * @param firstName the users first name
+     * @param lastName last name of user
      */
     public User(String password, String firstName, String lastName, String email) {
+        this.password = password;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
-        this.password = password;
     }
 
     /**
      * getUserID
      * @return userID
      */
-    public long getUserId() {
+    public Long getUserId() {
         return user_Id;
     }
 
@@ -60,7 +60,7 @@ public class User {
      * setUserID
      * @param userId the specified userID
      */
-    public void setUserId(long userId) {
+    public void setUserId(Long userId) {
         this.user_Id = userId;
     }
 
