@@ -17,8 +17,10 @@ import java.util.Optional;
 @RequestMapping("/users") //means the url starts with /users after application path (i.e. the endpoint)
 public class UserController {
 
-    @Autowired
-    private UserService userService;
+    //@Autowired
+    private final UserService userService;
+
+    public UserController (UserService userService) { this.userService = userService; }
 
     @GetMapping("")
     public List<UserDTO> fetchAllUsers() {

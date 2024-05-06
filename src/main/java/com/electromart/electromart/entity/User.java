@@ -7,10 +7,11 @@ import jakarta.persistence.*;
  */
 
 @Entity
-@Table(name="user")
+@Table(name="User")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name="user_ID")
     private Long user_Id;
 
     //@Column(nullable = false, length = 64)
@@ -51,7 +52,7 @@ public class User {
      * getUserID
      * @return userID
      */
-    public Long getUserId() {
+    public long getUserId() {
         return user_Id;
     }
 
@@ -59,7 +60,7 @@ public class User {
      * setUserID
      * @param userId the specified userID
      */
-    public void setUserId(Long userId) {
+    public void setUserId(long userId) {
         this.user_Id = userId;
     }
 
