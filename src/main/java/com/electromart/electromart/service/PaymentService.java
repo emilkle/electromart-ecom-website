@@ -36,20 +36,20 @@ public class PaymentService {
 
     /**
      * Creates a new payment and checks what kind of payment is to be made
-     * @param orderID corresponding order ID
+     * @param order corresponding order ID
      * @param shippingID corresponding shipping ID
      * @param paymentType method of payment
      * @param paymentDate date of payment
      * @param paymentStatus status of payment
      */
-    public void newPayment (Order orderID, Shipping shippingID,  String paymentType, String paymentDate, String paymentStatus) {
+    public void newPayment (Order order, Shipping shippingID,  String paymentType, String paymentDate, String paymentStatus) {
         //User clicks on button for desired payment method, given method is used as parameter in this method.
-        float totalAmount = calculateTotalPayment(orderID,shippingID);
+        float totalAmount = calculateTotalPayment(order,shippingID);
 
         switch (paymentType){
             case "Credit card":
                 CreditCard creditCardPayment = new CreditCard();
-                creditCardPayment.setOrderID(orderID);
+                creditCardPayment.setOrderID(order);
                 creditCardPayment.setPaymentAmount(totalAmount);
                 creditCardPayment.setThirdPartService("PayPal");
                 creditCardPayment.setPaymentDate(LocalDate.now().toString());
@@ -59,7 +59,7 @@ public class PaymentService {
                 break;
             case "Klarna":
                 Klarna klarnaPayment = new Klarna();
-                klarnaPayment.setOrderID(orderID);
+                klarnaPayment.setOrderID(order);
                 klarnaPayment.setPaymentAmount(totalAmount);
                 klarnaPayment.setEmailAddress("EmailAddresshere");
                 klarnaPayment.setPaymentDate(LocalDate.now().toString());
@@ -69,7 +69,7 @@ public class PaymentService {
                 break;
             case "Vipps":
                 Vipps vippsPayment = new Vipps();
-                vippsPayment.setOrderID(orderID);
+                vippsPayment.setOrderID(order);
                 vippsPayment.setPaymentAmount(totalAmount);
                 vippsPayment.setPhoneNumber(123415135);
                 vippsPayment.setPaymentDate(LocalDate.now().toString());
@@ -79,7 +79,7 @@ public class PaymentService {
                 break;
             case "Cryptocurrency":
                 Cryptocurrency cryptoPayment = new Cryptocurrency();
-                cryptoPayment.setOrderID(orderID);
+                cryptoPayment.setOrderID(order);
                 cryptoPayment.setPaymentAmount(totalAmount);
                 cryptoPayment.setCurrencyName("Bitcoin");
                 cryptoPayment.setPaymentDate(LocalDate.now().toString());
