@@ -1,41 +1,43 @@
-package com.electromart.electromart.entity;
+package com.electromart.electromart.dto;
 
-import jakarta.persistence.*;
+import com.electromart.electromart.entity.Product;
 
-@Entity
-@Table(name="Promotion")
-public class Promotion {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long promotionID;
+public class PromotionDTO {
 
-    @ManyToOne
-    @JoinColumn(name="product_ID")
-    private Product productID;
-
+    private Long promotionID;
+    private Product product;
     private String description;
     private String discountType;
-    private float discountValue;
+    private float discountvalue;
     private String startDate;
     private String endDate;
 
-    public Promotion () {}
+    public PromotionDTO() {}
 
-    public Promotion(Product product, String description, String discountType, int discountValue, String startDate, String endDate) {
-        this.productID = product;
+    public PromotionDTO(Long promotionID, Product product, String description, String discountType, float discountvalue, String startDate, String endDate) {
+        this.promotionID = promotionID;
+        this.product = product;
         this.description = description;
         this.discountType = discountType;
-        this.discountValue = discountValue;
+        this.discountvalue = discountvalue;
         this.startDate = startDate;
         this.endDate = endDate;
     }
 
-    public long getPromotionID() {
+    public Long getPromotionID() {
         return promotionID;
     }
 
-    public void setPromotionID(long promotionID) {
+    public void setPromotionID(Long promotionID) {
         this.promotionID = promotionID;
+    }
+
+    public Product getProduct() {
+        return product;
+    }
+
+    public void setProduct(Product product) {
+        this.product = product;
     }
 
     public String getDescription() {
@@ -54,12 +56,12 @@ public class Promotion {
         this.discountType = discountType;
     }
 
-    public float getDiscountValue() {
-        return discountValue;
+    public float getDiscountvalue() {
+        return discountvalue;
     }
 
-    public void setDiscountValue(float discountValue) {
-        this.discountValue = discountValue;
+    public void setDiscountvalue(float discountvalue) {
+        this.discountvalue = discountvalue;
     }
 
     public String getStartDate() {
