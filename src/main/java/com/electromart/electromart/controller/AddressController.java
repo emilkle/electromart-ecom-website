@@ -27,12 +27,12 @@ public class AddressController {
     }
 
     @GetMapping("")
-    public List<AddressDTO> fetchAllAddress() {
+    public ResponseEntity<?> fetchAllAddress() {
         List<AddressDTO> addresses = addressService.getAllAddresses();
         if (addresses.isEmpty()) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, " No addresses found");
+            return ResponseEntity.status(HttpStatus.OK).body("No addresses were found in the system.");
         } else {
-            return addresses;
+            return new ResponseEntity<>(addresses, HttpStatus.OK);
         }
     }
 

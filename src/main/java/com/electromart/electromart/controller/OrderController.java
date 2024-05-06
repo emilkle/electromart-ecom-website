@@ -72,8 +72,8 @@ public class OrderController {
             //Return the order and HTTP status code OK
             return new ResponseEntity<>(optionalOrder.get(), HttpStatus.OK);
         } else {
-            // If the order does not exist, return HTTP status code NOT_FOUND
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Order with ID: '" + id + "' not found");
+            // If the order does not exist, return HTTP status code OK
+            return ResponseEntity.status(HttpStatus.OK).body("Order with ID: '" + id + "' not found");
         }
     }
 
@@ -88,7 +88,7 @@ public class OrderController {
             orderService.deleteOrder(id);
             return ResponseEntity.ok().body("Order with ID: '" + id + "' successfully deleted.");
         } catch (EntityNotFoundException e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Order not found with ID: " + id);
+            return ResponseEntity.status(HttpStatus.OK).body("Order not found with ID: " + id);
         }
     }
 }
