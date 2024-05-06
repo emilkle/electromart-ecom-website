@@ -16,13 +16,22 @@ import java.util.List;
 import java.util.Objects;
 import org.springframework.web.server.ResponseStatusException;
 
+/**
+ * Service class responsible for handling promotion-related operations.
+ * Acts as an intermediary between the controller and the repository layer.
+ */
 @Service
 public class PromotionService {
-
 
     private final PromotionRepository promotionRepository;
     private final ProductRepository productRepository;
 
+    /**
+     * Constructor for PromotionService.
+     *
+     * @param promotionRepository The repository for managing Promotion entities.
+     * @param productRepository   The repository for managing Product entities.
+     */
     public PromotionService(PromotionRepository promotionRepository,
                             ProductRepository productRepository) {
         this.promotionRepository = promotionRepository;
@@ -30,32 +39,29 @@ public class PromotionService {
     }
 
     /**
-     * Fetches all promotions that is stored in the database.
+     * Fetches all promotions that are stored in the database.
      *
-     * @return a list of promotionDTO objects corresponding to all
-     * the promotions that are stored in the database.
+     * @return A list of promotionDTO objects corresponding to all promotions in the database.
      */
     public List<PromotionDTO> getAllPromotions() {
-        // Fetches all the promotions and store them in a list.
+        // Fetch all promotions and convert them to DTOs.
         List<Promotion> promotions = promotionRepository.findAll();
-        // Goes through the list of promotions and converts each promotion object to promotionDTO
-        // objects. Then it collect and return all the converted categories in a list.
         return promotions.stream()
             .map(this::convertToDTO)
             .collect(Collectors.toList());
     }
 
     /**
-     * Adds a new promotion to the database by using a promotionDTO object.
+     * Adds a new promotion to the database using a promotionDTO object.
      *
      * @param promotionDTO The promotionDTO object representing the promotion to be added.
      */
     public void addPromotion(PromotionDTO promotionDTO) {
-        // Create new promotion object based on the provided promotionDTO.
+        // Create a new promotion entity based on the provided promotionDTO.
         Promotion promotion = convertToEntity(promotionDTO);
-        // Save this promotion in the database.
+        // Save the promotion in the database.
         Promotion savedPromotion = promotionRepository.save(promotion);
-        // Return the newly added promotion as a promotionDTO object.
+        // Convert the saved promotion to a DTO.
         convertToDTO(savedPromotion);
     }
 
@@ -63,8 +69,7 @@ public class PromotionService {
      * Fetches a specific promotionDTO based on the promotion ID.
      *
      * @param id The promotion ID of the desired promotion.
-     * @return A promotionDTO that matches the specified promotion ID,
-     *         or an empty optional if no promotion with the specified ID was found.
+     * @return An Optional containing a promotionDTO that matches the specified ID, or an empty Optional if no promotion is found.
      */
     public Optional<PromotionDTO> getPromotionById(Long id) {
         Optional<Promotion> optionalPromotion = promotionRepository.findById(id);
@@ -72,31 +77,42 @@ public class PromotionService {
     }
 
     /**
+     * Deletes a promotion from the database based on a specified promotion ID.
+     *
+     * @param id The promotion ID of the promotion to be deleted.
+     * @throws ResponseStatusException If no promotion with the specified ID is found.
+     */
+    public void deletePromotion(Long id) {
+        if (promotionRepository.existsById(id)) {
+            promotionRepository.deleteById(id);
+        } else {
+            throw new ResponseStatusException(
+                HttpStatus.NOT_FOUND, "No promotion found with ID: " + id);
+        }
+    }
+
+    /**
      * Converts a Promotion entity object into a PromotionDTO data transfer object.
-     * Copies the properties from the Promotion entity to the PromotionDTO.
-     * Also sets the productId manually for the PromotionDTO.
      *
      * @param promotion The Promotion entity object to convert.
      * @return The converted PromotionDTO object.
      */
     private PromotionDTO convertToDTO(Promotion promotion) {
-        // Create new PromotionDTO object to store the converted promotion object
+        // Convert Promotion entity to DTO and set product ID.
         PromotionDTO promotionDTO = new PromotionDTO();
-        // Using BeanUtils library for copying the values in the promotion to the promotionDTO.
         BeanUtils.copyProperties(promotion, promotionDTO);
-        // Set fields manually for the promotionDTO.
         promotionDTO.setProductID(promotion.getProduct().getProductId());
         return promotionDTO;
     }
 
     /**
      * Converts a PromotionDTO data transfer object into a Promotion entity object.
-     * Copies the properties from the PromotionDTO to the Promotion entity.
      *
      * @param promotionDTO The PromotionDTO object to convert.
      * @return The converted Promotion entity object.
      */
     private Promotion convertToEntity(PromotionDTO promotionDTO) {
+        // Convert PromotionDTO to entity and set product.
         Promotion promotion = new Promotion();
         BeanUtils.copyProperties(promotionDTO, promotion);
         Product product = new Product();
@@ -107,44 +123,42 @@ public class PromotionService {
     }
 
     /**
-     * This method calculates the price discount for a promotion
+     * Calculates the price discount for a promotion.
      *
-     * @param product   the product
-     * @param promotion the promotion
-     * @return the float
+     * @param product   The product.
+     * @param promotion The promotion.
+     * @return The discounted price.
      */
-    public float calculateDiscountPrice (Product product, Promotion promotion) {
+    public float calculateDiscountPrice(Product product, Promotion promotion) {
         float originalPrice = product.getPrice();
         float discountValue = promotion.getDiscountValue();
-
         if (promotion.getDiscountType().equals("percentage")) {
-            return originalPrice * (1-discountValue/100);
+            return originalPrice * (1 - discountValue / 100);
         } else if (Objects.equals(promotion.getDiscountType(), "fixed")) {
             return originalPrice - discountValue;
-        } else{
+        } else {
             throw new IllegalArgumentException("Invalid discount type");
         }
     }
 
     /**
-     * startPromotionAndUpdatePrice creates a new promotion and updates the corresponding product with the correct
-     * discounted price
-     * @param productID a products id
-     * @param description description of a promotion
-     * @param discountType type of discount, percentage or fixed
-     * @param discountValue amount of discount
-     * @param startDate promotion start date
-     * @param endDate promotion end date
+     * Starts a promotion and updates the corresponding product with the correct discounted price.
+     *
+     * @param productID     The product's ID.
+     * @param description   The description of the promotion.
+     * @param discountType  The type of discount (percentage or fixed).
+     * @param discountValue The amount of discount.
+     * @param startDate     The start date of the promotion.
+     * @param endDate       The end date of the promotion.
      */
-    public void startPromotionAndUpdatePrice (Product productID, String description,
-                                              String discountType, int discountValue,
-                                              Date startDate, Date endDate) {
+    public void startPromotionAndUpdatePrice(Product productID, String description,
+                                             String discountType, int discountValue,
+                                             Date startDate, Date endDate) {
         Promotion promotion = new Promotion(productID, description, discountType,
             discountValue, startDate, endDate);
         promotionRepository.save(promotion);
-        float discountPrice = calculateDiscountPrice(productID,promotion);
+        float discountPrice = calculateDiscountPrice(productID, promotion);
         productID.setPrice(discountPrice);
         productRepository.save(productID);
     }
-
 }
