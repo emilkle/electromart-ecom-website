@@ -20,12 +20,12 @@ public class BrandDTO {
         this.description = description;
     }
 
-    public Long getBrandID() {
+    public Long getBrandId() {
         return brandID;
     }
 
-    public void setBrandID(Long brandID) {
-        this.brandID = brandID;
+    public void setBrandId(Long brandId) {
+        this.brandID = brandId;
     }
 
     public String getName() {

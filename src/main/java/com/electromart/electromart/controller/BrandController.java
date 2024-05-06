@@ -1,6 +1,7 @@
 package com.electromart.electromart.controller;
 
 import com.electromart.electromart.dto.BrandDTO;
+import com.electromart.electromart.dto.CategoryDTO;
 import com.electromart.electromart.entity.Brand;
 import com.electromart.electromart.entity.Product;
 import com.electromart.electromart.repository.BrandRepository;
@@ -24,6 +25,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
+import org.springframework.web.server.ResponseStatusException;
 
 /**
  * The type Brand controller.
@@ -32,23 +34,32 @@ import org.springframework.web.method.annotation.MethodArgumentTypeMismatchExcep
 @RequestMapping("/brand")
 public class BrandController {
 
-    private BrandService brandService;
-    private BrandRepository brandRepository;
-    private ProductRepository productRepository;
-    private ProductService productService;
+    private final BrandService brandService;
+    private final BrandRepository brandRepository;
+    private final ProductRepository productRepository;
+    private final ProductService productService;
 
-    BrandController(BrandRepository repository) {
+    BrandController(BrandService brandService, BrandRepository repository,
+                    ProductRepository productRepository, ProductService productService) {
         this.brandRepository = repository;
+        this.brandService = brandService;
+        this.productRepository = productRepository;
+        this.productService = productService;
     }
 
     /**
-     * Fetch all brands list.
-     *
-     * @return the list
+     * Handles GET requests for returning all the brands present in the database.
+     * @return A list with all the brands in the database.
+     * @throws ResponseStatusException with HttpStatus.NOT_FOUND if no brands are found.
      */
     @GetMapping({"", "/"})
-    public List<Brand> fetchAllBrands() {
-        return brandService.getAllBrands();
+    public List<BrandDTO> fetchAllCategories() {
+        List<BrandDTO> brands = brandService.getAllBrands();
+        if (brands.isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No brands found");
+        } else {
+            return brands;
+        }
     }
 
     /**
@@ -61,7 +72,7 @@ public class BrandController {
     public ResponseEntity<String> fetchBrandName(@PathVariable(value = "id", required = false)
                                                  Long id) {
         Optional<String> brandNameParam = brandService.getNameFromID(id);
-        if (id != null && id > 0) {
+        if (id != null && id >= 0) {
             return brandNameParam.map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND)
                     .body("The brand with id " + id + " Was not found"));

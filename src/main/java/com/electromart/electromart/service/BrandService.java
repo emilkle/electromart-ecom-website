@@ -2,15 +2,21 @@ package com.electromart.electromart.service;
 
 import com.electromart.electromart.dto.BrandDTO;
 import com.electromart.electromart.dto.CategoryDTO;
+import com.electromart.electromart.dto.InventoryDTO;
 import com.electromart.electromart.entity.Brand;
 import com.electromart.electromart.entity.Category;
 import com.electromart.electromart.repository.BrandRepository;
+import com.electromart.electromart.repository.CategoryRepository;
 import java.util.Optional;
+import java.util.stream.Collectors;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.server.ResponseStatusException;
 
 /**
  * The type Brand service.
@@ -19,15 +25,26 @@ import java.util.List;
 public class BrandService {
 
     @Autowired
-    private BrandRepository brandRepository;
+    private final BrandRepository brandRepository;
+
+    public BrandService(BrandRepository brandRepository) {
+        this.brandRepository = brandRepository;
+    }
 
     /**
-     * Gets all brands.
+     * Fetches all brands that is stored in the database.
      *
-     * @return the all brands
+     * @return a list of brandDTO objects corresponding to all the brands
+     * that are stored in the database.
      */
-    public List<Brand> getAllBrands() {
-        return brandRepository.findAll();
+    public List<BrandDTO> getAllBrands() {
+        // Fetches all the brands and store them in a list.
+        List<Brand> brands = brandRepository.findAll();
+        // Goes through the list of brands and converts each brand object to brandDTO objects.
+        // Then it collect and return all the converted brands in a list.
+        return brands.stream()
+            .map(this::convertToDTO)
+            .collect(Collectors.toList());
     }
 
     /**
@@ -37,11 +54,11 @@ public class BrandService {
      * @return the optional
      */
     public Optional<String> getNameFromID(Long id){
-        Optional<Brand> brandParam = getAllBrands()
+        Optional<BrandDTO> brandDTO = getAllBrands()
             .stream()
             .filter(brand -> brand.getBrandId().equals(id))
             .findFirst();
-        return brandParam.map(Brand::getName);
+        return brandDTO.map(BrandDTO::getName);
     }
 
     /**
@@ -51,10 +68,11 @@ public class BrandService {
      * @return the optional
      */
     public Optional<String> getDescriptionFromName(String name){
-        Optional<Brand> brandParam = getAllBrands()
-            .stream().filter(brand -> brand.getName().equals(name))
+        Optional<BrandDTO> brandDTO = getAllBrands()
+            .stream()
+            .filter(brand -> brand.getName().equals(name))
             .findFirst();
-        return brandParam.map(Brand::getDescription);
+        return brandDTO.map(BrandDTO::getDescription);
     }
 
     /**
@@ -63,10 +81,12 @@ public class BrandService {
      * @return  The converted brand object.
      */
     private BrandDTO convertToDTO(Brand brand) {
-        // Create new brandDTO object to store the converted brand object
+        // Create new brandBTO object to store the converted brand object
         BrandDTO brandDTO = new BrandDTO();
         // Using BeanUtils library for copying the values in the brand to the brandDTO.
         BeanUtils.copyProperties(brand, brandDTO);
+        //Set brandID manually for the brandDTO.
+        brandDTO.setBrandId(brand.getBrandId());
         return brandDTO;
     }
 
