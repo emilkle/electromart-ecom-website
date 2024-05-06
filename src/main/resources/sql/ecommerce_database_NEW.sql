@@ -528,6 +528,12 @@ ALTER TABLE `shipping`
   MODIFY `shipping_ID` int(11) NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT for table `user`
+--
+ALTER TABLE `user`
+  MODIFY `user_ID` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- Begrensninger for dumpede tabeller
 --
 
