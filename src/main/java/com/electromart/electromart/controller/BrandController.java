@@ -1,5 +1,6 @@
 package com.electromart.electromart.controller;
 
+import com.electromart.electromart.dto.BrandDTO;
 import com.electromart.electromart.entity.Brand;
 import com.electromart.electromart.entity.Product;
 import com.electromart.electromart.repository.BrandRepository;
@@ -13,14 +14,16 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.transaction.annotation.Transactional;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
 /**
  * The type Brand controller.
@@ -29,11 +32,9 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/brand")
 public class BrandController {
 
-    @Autowired
     private BrandService brandService;
     private BrandRepository brandRepository;
     private ProductRepository productRepository;
-    @Autowired
     private ProductService productService;
 
     BrandController(BrandRepository repository) {
@@ -98,15 +99,12 @@ public class BrandController {
      * @return the response entity
      */
     @PostMapping({"", "/"})
-    public ResponseEntity<String> addNewBrand(@RequestBody Brand brandRequest) {
-        if (!isValidDataTypes(brandRequest)) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid " +
-                "payload in the POST request.");
-        } else {
-            brandRepository.save(brandRequest);
-            return ResponseEntity.status(HttpStatus.CREATED).body("The requested brand was " +
-                "created successfully.");
-        }
+    public ResponseEntity<String> addNewBrand(@RequestBody BrandDTO brandRequest) {
+            // Add the brand to the database
+            brandService.addBrand(brandRequest);
+            // Return a response with the saved brand and HTTP status code
+            return new ResponseEntity<>("The requested brand was " +
+                "created successfully.", HttpStatus.CREATED);
     }
 
     /**
@@ -118,10 +116,11 @@ public class BrandController {
     @DeleteMapping("/brand_id={id}")
     public ResponseEntity<String> deleteBrand(@PathVariable(
         value = "id", required = false) Long id) {
-        if (id == null || id <= 0) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid " +
-                "id in the DELETE request.");
-        } else {
+        if (id == null) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("ID cannot be null.");
+        }
+
+        if (brandRepository.existsById(id)) {
             try {
                 List<Product> products = productService.findProductFromBrandId(id);
                 for (Product product : products) {
@@ -137,22 +136,19 @@ public class BrandController {
             } catch (DataIntegrityViolationException e) {
                 return ResponseEntity.status(HttpStatus.CONFLICT)
                     .body("Cannot delete brand because it has associated products.");
+            } catch (MethodArgumentTypeMismatchException e){
+                return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Invalid ID." +
+                    " Please use an integer number");
             }
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                .body("Brand with ID " + id + " does not exist.");
         }
     }
 
-    /**
-     * Validates the datatype of each field in the POST request payload.
-     *
-     * @param brandRequest the brand request
-     * @return true or false
-     */
-    private boolean isValidDataTypes(Brand brandRequest) {
-        if (!(brandRequest.getBrandId() instanceof Long) ||
-            !(brandRequest.getName() instanceof String) ||
-            !(brandRequest.getDescription() instanceof String)){
-            return false;
-        }
-        return true;
+    @ExceptionHandler(HttpMessageNotReadableException.class)
+    public ResponseEntity<String> handleHttpMessageNotReadable(HttpMessageNotReadableException e) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+            .body("Invalid JSON payload. Please ensure that the data types are correct.");
     }
 }
