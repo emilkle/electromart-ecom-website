@@ -1,13 +1,19 @@
 package com.electromart.electromart.service;
 
+import com.electromart.electromart.dto.AddressDTO;
+import com.electromart.electromart.dto.UserDTO;
+import com.electromart.electromart.entity.Address;
 import com.electromart.electromart.entity.User;
 import com.electromart.electromart.repository.UserRepository;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class UserService {
@@ -17,27 +23,46 @@ public class UserService {
 
     private PasswordEncoder passwordEncoder;
 
-    //Query for returning all users
-    public List<User> getAllUsers() {
-        return userRepository.findAll();
-    }
-
-
     public String encodePassword (String passwordFromInput) {
         passwordEncoder = new BCryptPasswordEncoder();
         return passwordEncoder.encode(passwordFromInput);
     }
 
-    public long createNewUser () {
-        String email = "email from user input";
-        String password = "password from user input";
-        String firstName = "first name from input";
-        String lastName = "last name from input";
 
-        String encodedPassword = encodePassword(password);
-        User user = new User(encodedPassword,firstName,lastName,email);
-        userRepository.save(user);
-        return user.getUserId();
+    public List<UserDTO> getAllUsers() {
+        List<User> users = userRepository.findAll();
+        return users.stream()
+                .map(user -> convertToDTO(user))
+                .collect(Collectors.toList());
+    }
+
+    public UserDTO addUser (UserDTO userDTO) {
+        String encodedPassword = encodePassword(userDTO.getPassword());
+        userDTO.setPassword(encodedPassword);
+        User user = convertToEntity(userDTO);
+        User savedUSer = userRepository.save(user);
+        return convertToDTO(savedUSer);
+    }
+
+    public Optional<UserDTO> getUserByID (long id) {
+        Optional<User> optionalUser = userRepository.findById(id);
+        return optionalUser.map(user -> convertToDTO(user));
+    }
+
+    private UserDTO convertToDTO (User user) {
+        UserDTO userDTO = new UserDTO();
+        BeanUtils.copyProperties(user, userDTO);
+        userDTO.setUserID(user.getUserId());
+        return userDTO;
+    }
+
+    private User convertToEntity(UserDTO userDTO) {
+        // Create new address object to store the converted addressDTO object
+        User user = new User();
+        // Using BeanUtils library for copying the values in the addressDTO to the address.
+        BeanUtils.copyProperties(userDTO, user);
+        user.setUserId(userDTO.getUserID());
+        return user;
     }
 }
 
