@@ -25,7 +25,7 @@ public class SecurityConfig {
         return http
 
             // Configures authorization for all HTTP requests
-            .authorizeHttpRequests((authz) -> authz
+            .authorizeHttpRequests(authz -> authz
                 .anyRequest().permitAll()
             )
 
