@@ -1,22 +1,15 @@
 package com.electromart.electromart.service;
 
 import com.electromart.electromart.dto.BrandDTO;
-import com.electromart.electromart.dto.CategoryDTO;
-import com.electromart.electromart.dto.InventoryDTO;
 import com.electromart.electromart.entity.Brand;
-import com.electromart.electromart.entity.Category;
 import com.electromart.electromart.repository.BrandRepository;
-import com.electromart.electromart.repository.CategoryRepository;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.server.ResponseStatusException;
 
 /**
  * The type Brand service.
@@ -107,15 +100,14 @@ public class BrandService {
      * Adds a new brand to the database by using a brandDTO object.
      *
      * @param brandDTO The brandDTO object representing the brand to be added.
-     * @return A brandDTO representation of the added brand.
      */
-    public BrandDTO addBrand(BrandDTO brandDTO) {
+    public void addBrand(BrandDTO brandDTO) {
         // Create new brand object based on the provided brandDTO.
         Brand brand = convertToEntity(brandDTO);
         // Save this brand in the database.
         Brand savedBrand = brandRepository.save(brand);
         // Return the newly added brand as a brandDTO object.
-        return convertToDTO(savedBrand);
+        convertToDTO(savedBrand);
     }
 }
 
