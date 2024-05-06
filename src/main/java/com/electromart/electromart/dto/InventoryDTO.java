@@ -1,9 +1,7 @@
 package com.electromart.electromart.dto;
 
-import com.electromart.electromart.entity.Product;
-
 /**
- * Data Transfer Object for the (DTO) for inventory data.
+ * Data Transfer Object (DTO) for the inventory data.
  * It is used to encapsulate the inventory data that is transferred
  between the InventoryService and the InventoryController.
  * This ensures that the service layer are not directly interacting with the database.

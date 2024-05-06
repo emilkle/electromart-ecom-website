@@ -21,9 +21,6 @@ import java.util.stream.Collectors;
 @Service
 public class AddressService {
 
-    //@Autowired
-    //private AddressRepository addressRepository;
-
     private final AddressRepository addressRepository;
     public AddressService(AddressRepository addressRepository) {
         this.addressRepository = addressRepository;
@@ -81,6 +78,17 @@ public class AddressService {
         return optionalAddress.map(address -> convertToDTO(address));
     }
 
+    // Method to get addresses by the foreign key user ID
+    public List<AddressDTO> getAddressesByUserID(Long userID) {
+        // Fetch all addresses from the database
+        List<Address> allAddresses = addressRepository.findAll();
+        // Filter addresses based on userID and convert to DTOs
+        return allAddresses.stream()
+                .filter(address -> address.getUserID().getUserId().equals(userID))
+                .map(this::convertToDTO)
+                .collect(Collectors.toList());
+    }
+
     /**
      * Deletes an address object from the database based on a specified addressID.
      * @param id The specified addressID of the address to be deleted.
@@ -105,6 +113,7 @@ public class AddressService {
         AddressDTO addressDTO = new AddressDTO();
         // Using BeanUtils library for copying the values in the address to the addressDTO.
         BeanUtils.copyProperties(address, addressDTO);
+        addressDTO.setUserID(address.getUserID().getUserId());
         return addressDTO;
     }
 

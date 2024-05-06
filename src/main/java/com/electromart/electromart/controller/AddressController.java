@@ -26,13 +26,13 @@ public class AddressController {
         this.addressService = addressService;
     }
 
-    @GetMapping("")
-    public List<AddressDTO> fetchAllAddress() {
+    @GetMapping("/")
+    public ResponseEntity<?> fetchAllAddress() {
         List<AddressDTO> addresses = addressService.getAllAddresses();
         if (addresses.isEmpty()) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, " No addresses found");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No addresses were found in the system.");
         } else {
-            return addresses;
+            return new ResponseEntity<>(addresses, HttpStatus.OK);
         }
     }
 
@@ -41,7 +41,7 @@ public class AddressController {
      * @param addressDTO The addressDTO representing the address to be added.
      * @return ResponseEntity containing the added addressDTO and a http status code CREATED.
      */
-    @PostMapping("")
+    @PostMapping("/")
     public ResponseEntity<AddressDTO> addAddress(@RequestBody AddressDTO addressDTO) {
         // Add the address to the database
         AddressDTO savedAddress = addressService.addAddress(addressDTO);
@@ -55,7 +55,7 @@ public class AddressController {
      * @param id The addressID of the desired address.
      * @return ResponseEntity containing the addressDTO if found and HTTP status OK, otherwise NOT_FOUND.
      */
-    @GetMapping("/{id}")
+    @GetMapping("/get-address/address_id={id}")
     // Return type set to "?" for flexible return type in case the desired address does not exist and
     // an address not found message needs to be returned.
     public ResponseEntity<?> getAddressById(@PathVariable Long id) {
@@ -72,11 +72,30 @@ public class AddressController {
     }
 
     /**
+     * Retrieves all addresses for a specific user.
+     * @param userId The user ID for whom addresses will be fetched.
+     * @return HTTP response containing the list of addresses or an error message if no addresses found.
+     */
+    @GetMapping("/user-address/user_id={userId}")
+    public ResponseEntity<?> getAddressByUserId(@PathVariable Long userId) {
+        List<AddressDTO> addressList = addressService.getAddressesByUserID(userId);
+
+        if (addressList.isEmpty()) {
+            // If no addresses were found, return HTTP status code NOT_FOUND
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body("No addresses found for user with ID: '" + userId + "'");
+        } else {
+            // If addresses are found, return them with HTTP status code OK
+            return ResponseEntity.ok(addressList);
+        }
+    }
+
+    /**
      * Deletes an address based on a specified addressID, and provides a feedback on the outcome.
      * @param id The addressID of the address to be deleted.
      * @return ResponseEntity containing the outcome of the deletion.
      */
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/delete-address/address_id={id}")
     public ResponseEntity<?> deleteAddress(@PathVariable Long id) {
         try {
             addressService.deleteAddress(id);

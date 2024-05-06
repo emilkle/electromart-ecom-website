@@ -31,13 +31,13 @@ public class CategoryController {
      * @return A list with all the categories in the database.
      * @throws ResponseStatusException with HttpStatus.NOT_FOUND if no categories are found.
      */
-    @GetMapping({"", "/"})
-    public List<CategoryDTO> fetchAllCategories() {
+    @GetMapping({""})
+    public ResponseEntity<?> fetchAllCategories() {
         List<CategoryDTO> categories = categoryService.getAllCategories();
         if (categories.isEmpty()) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No categories found");
+            return ResponseEntity.status(HttpStatus.OK).body("The system does not contain any categories.");
         } else {
-            return categories;
+            return new ResponseEntity<>(categories, HttpStatus.OK);
         }
     }
 
