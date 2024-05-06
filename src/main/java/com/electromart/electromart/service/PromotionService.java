@@ -46,6 +46,20 @@ public class PromotionService {
     }
 
     /**
+     * Adds a new promotion to the database by using a promotionDTO object.
+     *
+     * @param promotionDTO The promotionDTO object representing the promotion to be added.
+     */
+    public void addPromotion(PromotionDTO promotionDTO) {
+        // Create new promotion object based on the provided promotionDTO.
+        Promotion promotion = convertToEntity(promotionDTO);
+        // Save this promotion in the database.
+        Promotion savedPromotion = promotionRepository.save(promotion);
+        // Return the newly added promotion as a promotionDTO object.
+        convertToDTO(savedPromotion);
+    }
+
+    /**
      * Fetches a specific promotionDTO based on the promotion ID.
      *
      * @param id The promotion ID of the desired promotion.

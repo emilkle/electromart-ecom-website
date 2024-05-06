@@ -58,4 +58,19 @@ public class PromotionController {
                 .body("Promotion with ID: '" + id + "' not found");
         }
     }
+
+    /**
+     * Add new promotion response entity.
+     *
+     * @param promotionRequest the brand request
+     * @return the response entity
+     */
+    @PostMapping({"", "/"})
+    public ResponseEntity<String> addNewPromotion(@RequestBody PromotionDTO promotionRequest) {
+        // Add the promotion to the database
+        promotionService.addPromotion(promotionRequest);
+        // Return a response with the saved promotion and HTTP status code
+        return new ResponseEntity<>("The requested promotion was " +
+            "created successfully.", HttpStatus.CREATED);
+    }
 }
