@@ -61,6 +61,7 @@ public class UserService {
         User user = new User();
         // Using BeanUtils library for copying the values in the addressDTO to the address.
         BeanUtils.copyProperties(userDTO, user);
+        System.out.println("user DTO id: " + userDTO.getUserID() +" User id: " + user.getUserId());
         user.setUserId(userDTO.getUserID());
         return user;
     }

@@ -7,10 +7,11 @@ import jakarta.persistence.*;
  */
 
 @Entity
-@Table(name="user")
+@Table(name="User")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name="user_ID")
     private long user_Id;
 
     //@Column(nullable = false, length = 64)
@@ -35,16 +36,16 @@ public class User {
 
     /**
      * Constructor no 2 with arguments for the User entity.
-     * @param password the users password
-     * @param email the users email address
      * @param firstName the users first name
      * @param lastName last name of user
+     * @param password the users password
+     * @param email the users email address
      */
     public User(String password, String firstName, String lastName, String email) {
-        this.password = password;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
+        this.password = password;
     }
 
     /**
