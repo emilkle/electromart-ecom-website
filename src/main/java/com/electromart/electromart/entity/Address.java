@@ -24,8 +24,8 @@ public class Address {
 
     public Address () {}
 
-    public Address (User userid, String address, String postalCode, String city, String country) {
-        this.userID = userid;
+    public Address (User userId, String address, String postalCode, String city, String country) {
+        this.userID = userId;
         this.address = address;
         this.postalCode = postalCode;
         this.city = city;
@@ -39,6 +39,10 @@ public class Address {
 
     public void setAddressID(Long addressID) {
         this.addressID = addressID;
+    }
+
+    public User getUserID() {
+        return userID;
     }
 
     public String getAddress() {
