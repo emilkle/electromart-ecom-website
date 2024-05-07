@@ -2,8 +2,11 @@ package com.electromart.electromart.service;
 
 import com.electromart.electromart.dto.OrderDTO;
 import com.electromart.electromart.entity.Order;
+import com.electromart.electromart.entity.User;
 import com.electromart.electromart.repository.OrderRepository;
+import com.electromart.electromart.repository.UserRepository;
 import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -19,10 +22,14 @@ import java.util.stream.Collectors;
 @Service
 public class OrderService {
 
-    private final OrderRepository orderRepository;
 
-    public OrderService(OrderRepository orderRepository) {
+    private final OrderRepository orderRepository;
+    private final UserRepository userRepository;
+
+    @Autowired
+    public OrderService(OrderRepository orderRepository, UserRepository userRepository) {
         this.orderRepository = orderRepository;
+        this.userRepository = userRepository;
     }
 
     /**
@@ -47,10 +54,27 @@ public class OrderService {
     public OrderDTO addOrder(OrderDTO orderDTO) {
         // Create new order object based on the provided orderDTO.
         Order order = convertToEntity(orderDTO);
-        // Save this order in the database.
+
+        // only the userID is stored in the orderDTO
+        // So we need to get this
+        Long userId = orderDTO.getUserId();
+
+        // Retrieve the user using the userID from the orderDTO
+        Optional<User> userOptional = userRepository.findById(userId);
+        // If the user does not exist throw exception
+        if (!userOptional.isPresent()) {
+            throw new RuntimeException("User not found with ID: " + userId);
+        }
+
+        // Set the user to the order
+        order.setUserID(userOptional.get());
+        order.setOrderTotalAmount(orderDTO.getOrderAmount());
+
+        // Save the order in the database.
         Order savedOrder = orderRepository.save(order);
-        // Return the newly added category as a categoryDTO object.
-        return convertToDTO(order);
+
+        // Return the newly added order as an OrderDTO object.
+        return convertToDTO(savedOrder);
     }
 
     /**
@@ -88,6 +112,9 @@ public class OrderService {
         OrderDTO orderDTO = new OrderDTO();
         // Using BeanUtils library for copying the values in the order to the orderDTO.
         BeanUtils.copyProperties(order, orderDTO);
+        orderDTO.setUserId(order.getUserID().getUserId());
+        orderDTO.setOrderId(order.getOrderID());
+        orderDTO.setOrderAmount(order.getOrderTotalAmount());
         return orderDTO;
     }
 

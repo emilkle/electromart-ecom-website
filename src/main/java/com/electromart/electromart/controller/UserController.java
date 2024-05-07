@@ -3,6 +3,7 @@ package com.electromart.electromart.controller;
 import com.electromart.electromart.dto.UserDTO;
 import com.electromart.electromart.service.UserService;
 import jakarta.persistence.EntityNotFoundException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,9 +16,9 @@ import java.util.Optional;
 @RequestMapping("/users") //means the url starts with /users after application path (i.e. the endpoint)
 public class UserController {
 
-    //@Autowired
     private final UserService userService;
 
+    @Autowired
     public UserController (UserService userService) { this.userService = userService; }
 
     @GetMapping("")

@@ -4,6 +4,7 @@ import com.electromart.electromart.dto.CategoryDTO;
 import com.electromart.electromart.entity.Category;
 import com.electromart.electromart.repository.CategoryRepository;
 import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -21,6 +22,7 @@ public class CategoryService {
 
     private final CategoryRepository categoryRepository;
 
+    @Autowired
     public CategoryService(CategoryRepository categoryRepository) {
         this.categoryRepository = categoryRepository;
     }

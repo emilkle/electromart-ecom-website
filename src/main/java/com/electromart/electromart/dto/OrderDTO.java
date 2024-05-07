@@ -1,5 +1,7 @@
 package com.electromart.electromart.dto;
 
+import com.electromart.electromart.entity.User;
+
 /**
  * Data Transfer Object for the (DTO) for order data.
  * It is used to encapsulate the order data that is transferred
@@ -11,7 +13,7 @@ public class OrderDTO {
     private Long orderID;
     private Long userID;
     private String orderDate;
-    private float orderAmount;
+    private float orderTotalAmount;
     private String orderStatus;
 
     //private int productID;
@@ -24,7 +26,7 @@ public class OrderDTO {
         this.orderID = orderId;
         this.userID = userId;
         this.orderDate = orderDate;
-        this.orderAmount = orderAmount;
+        this.orderTotalAmount = orderAmount;
         this.orderStatus = orderStatus;
     }
 
@@ -63,11 +65,11 @@ public class OrderDTO {
     }
 
     public float getOrderAmount() {
-        return orderAmount;
+        return orderTotalAmount;
     }
 
     public void setOrderAmount(float orderAmount) {
-        this.orderAmount = orderAmount;
+        this.orderTotalAmount = orderAmount;
     }
 
     public String getOrderStatus() {
