@@ -66,6 +66,20 @@ public class ShippingService {
         return optionalShipping.map(this::convertToDTO);
     }
 
+    /**
+     * Deletes a shipping option from the database based on a specified shipping ID.
+     *
+     * @param id The shipping ID of the shipping option to be deleted.
+     * @throws ResponseStatusException If no shipping option with the specified ID is found.
+     */
+    public void deleteShipping(Long id) {
+        if (shippingRepository.existsById(id)) {
+            shippingRepository.deleteById(id);
+        } else {
+            throw new ResponseStatusException(
+                HttpStatus.NOT_FOUND, "No shipping option found with ID: " + id);
+        }
+    }
 
     /**
      * Converts a Shipping entity object into a ShippingDTO data transfer object.

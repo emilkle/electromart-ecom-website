@@ -77,6 +77,29 @@ public class ShippingController {
     }
 
     /**
+     * Handles DELETE requests to delete a shipping option by ID.
+     *
+     * @param id The ID of the shipping option to delete.
+     * @return ResponseEntity with a success message if deleted, or
+     * NOT_FOUND status with an error message if not found.
+     */
+    @DeleteMapping("/shipping_id={id}")
+    public ResponseEntity<String> deleteShipping(@PathVariable String id) {
+        try {
+            Long shippingId = Long.parseLong(id);
+            shippingService.deleteShipping(shippingId);
+            return ResponseEntity.ok().body("Shipping option with ID: '"
+                + shippingId + "' successfully deleted.");
+        } catch (ResponseStatusException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                .body("Shipping option with ID: '" + id + "' was not found.");
+        } catch (NumberFormatException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body("Invalid shipping option ID. Please use an integer number as ID.");
+        }
+    }
+
+    /**
      * Handles HTTP message not readable exceptions.
      *
      * @param e The HttpMessageNotReadableException object.
