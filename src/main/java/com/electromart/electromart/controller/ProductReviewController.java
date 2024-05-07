@@ -17,7 +17,7 @@ import org.springframework.web.server.ResponseStatusException;
  * Controller class responsible for handling product review-related HTTP requests.
  */
 @RestController
-@RequestMapping("/productReview")
+@RequestMapping("/review")
 public class ProductReviewController {
 
     private final ProductReviewService productReviewService;
