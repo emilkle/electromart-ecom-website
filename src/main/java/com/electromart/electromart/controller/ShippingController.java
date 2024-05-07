@@ -64,6 +64,19 @@ public class ShippingController {
     }
 
     /**
+     * Handles POST requests to add a new shipping option.
+     *
+     * @param shippingRequest The ShippingDTO object representing the new shipping option.
+     * @return ResponseEntity with a success message and CREATED status.
+     */
+    @PostMapping({"", "/"})
+    public ResponseEntity<String> addNewShipping(@RequestBody ShippingDTO shippingRequest) {
+        shippingService.addShipping(shippingRequest);
+        return new ResponseEntity<>(
+            "The requested shipping option was created successfully.", HttpStatus.CREATED);
+    }
+
+    /**
      * Handles HTTP message not readable exceptions.
      *
      * @param e The HttpMessageNotReadableException object.
