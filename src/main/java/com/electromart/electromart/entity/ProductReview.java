@@ -7,15 +7,16 @@ import jakarta.persistence.*;
 public class ProductReview {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int reviewID;
+    @Column(name="review_ID")
+    private Long reviewID;
 
     @OneToOne
     @JoinColumn(name="user_ID")
-    private User userID;
+    private User user;
 
     @OneToOne
     @JoinColumn(name="product_ID")
-    private Product productID;
+    private Product product;
 
     private int rating;
 
@@ -25,20 +26,37 @@ public class ProductReview {
 
     public ProductReview() {}
 
-    public ProductReview(User userID, Product productID, int rating, String reviewText, String reviewDate) {
-        this.userID = userID;
-        this.productID = productID;
+    public ProductReview(User user, Product product, int rating,
+                         String reviewText, String reviewDate) {
+        this.user = user;
+        this.product = product;
         this.rating = rating;
         this.reviewText = reviewText;
         this.reviewDate = reviewDate;
     }
 
-    public int getReviewID() {
+    public Long getReviewID() {
         return reviewID;
     }
 
-    public void setReviewID(int reviewID) {
+    public void setReviewID(Long reviewID) {
         this.reviewID = reviewID;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public Product getProduct() {
+        return product;
+    }
+
+    public void setProduct(Product product) {
+        this.product = product;
     }
 
     public int getRating() {

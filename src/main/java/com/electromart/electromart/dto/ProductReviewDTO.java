@@ -1,51 +1,48 @@
 package com.electromart.electromart.dto;
 
-import com.electromart.electromart.entity.Product;
-import com.electromart.electromart.entity.ProductReview;
-import com.electromart.electromart.entity.User;
+public class ProductReviewDTO {
 
-public class ReviewDTO {
-
-    private int reviewID;
-    private User user;
-    private Product product;
+    private Long reviewID;
+    private Long userID;
+    private Long productID;
     private int rating;
     private String reviewText;
     private String reviewDate;
 
-    public ReviewDTO () {}
+    public ProductReviewDTO() {}
 
-    public ReviewDTO(int reviewID, User user, Product product, int rating, String reviewText, String reviewDate) {
+    public ProductReviewDTO(Long reviewID, Long userID, Long productID, int rating,
+                            String reviewText, String reviewDate) {
         this.reviewID = reviewID;
-        this.user = user;
-        this.product = product;
+        this.userID = userID;
+        this.productID = productID;
         this.rating = rating;
         this.reviewText = reviewText;
         this.reviewDate = reviewDate;
     }
 
-    public int getReviewID() {
+    public Long getReviewID() {
         return reviewID;
     }
 
-    public void setReviewID(int reviewID) {
+    public void setReviewID(Long reviewID) {
         this.reviewID = reviewID;
     }
 
-    public User getUser() {
-        return user;
+    public Long getUserID() {
+        return userID;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setUserID(Long userID) {
+        this.userID = userID;
     }
 
-    public Product getProduct() {
-        return product;
+    public Long getProductID() {
+        return productID;
     }
 
-    public void setProduct(Product product) {
-        this.product = product;
+    public void setProductID(Long productID) {
+        this.productID = productID;
     }
 
     public int getRating() {
