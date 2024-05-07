@@ -286,7 +286,7 @@ CREATE TABLE `review` (
   `product_ID` int(11) NOT NULL,
   `rating` int(11) NOT NULL,
   `review_text` varchar(255) NOT NULL,
-  `date` date NOT NULL
+  `review_date` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_danish_ci;
 
 --
