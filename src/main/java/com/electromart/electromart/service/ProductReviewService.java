@@ -71,6 +71,21 @@ public class ProductReviewService {
     }
 
     /**
+     * Deletes a product review from the database based on a specified review ID.
+     *
+     * @param id The review ID of the product review to be deleted.
+     * @throws ResponseStatusException If no product review with the specified ID is found.
+     */
+    public void deleteProductReview(Long id) {
+        if (productReviewRepository.existsById(id)) {
+            productReviewRepository.deleteById(id);
+        } else {
+            throw new ResponseStatusException(
+                HttpStatus.NOT_FOUND, "No product review found with ID: " + id);
+        }
+    }
+
+    /**
      * Converts a ProductReview entity object into a ProductReviewDTO data transfer object.
      *
      * @param productReview The ProductReview entity object to convert.

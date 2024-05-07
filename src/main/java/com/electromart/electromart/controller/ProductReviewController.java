@@ -80,4 +80,39 @@ public class ProductReviewController {
         return new ResponseEntity<>(
             "The requested product review was created successfully.", HttpStatus.CREATED);
     }
+
+    /**
+     * Handles DELETE requests to delete a product review by ID.
+     *
+     * @param id The ID of the product review to delete.
+     * @return ResponseEntity with a success message if deleted, or
+     * NOT_FOUND status with an error message if not found.
+     */
+    @DeleteMapping("/review_id={id}")
+    public ResponseEntity<String> deleteProductReview(@PathVariable String id) {
+        try {
+            Long reviewId = Long.parseLong(id);
+            productReviewService.deleteProductReview(reviewId);
+            return ResponseEntity.ok().body("Product review with ID: '"
+                + reviewId + "' successfully deleted.");
+        } catch (ResponseStatusException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                .body("Product review with ID: '" + id + "' was not found.");
+        } catch (NumberFormatException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body("Invalid product review ID. Please use an integer number as ID.");
+        }
+    }
+
+    /**
+     * Handles HTTP message not readable exceptions.
+     *
+     * @param e The HttpMessageNotReadableException object.
+     * @return ResponseEntity with a BAD_REQUEST status and an error message.
+     */
+    @ExceptionHandler(HttpMessageNotReadableException.class)
+    public ResponseEntity<String> handleHttpMessageNotReadable(HttpMessageNotReadableException e) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+            .body("Invalid JSON payload. Please ensure that all the data types are correct.");
+    }
 }
