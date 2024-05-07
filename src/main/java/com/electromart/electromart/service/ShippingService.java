@@ -43,7 +43,16 @@ public class ShippingService {
             .collect(Collectors.toList());
     }
 
-
+    /**
+     * Adds a new shipping option to the database using a ShippingDTO object.
+     *
+     * @param shippingDTO The ShippingDTO object representing the shipping option to be added.
+     */
+    public void addShipping(ShippingDTO shippingDTO) {
+        Shipping shipping = convertToEntity(shippingDTO);
+        Shipping savedShipping = shippingRepository.save(shipping);
+        convertToDTO(savedShipping);
+    }
 
     /**
      * Fetches a specific shipping option based on the shipping ID.
