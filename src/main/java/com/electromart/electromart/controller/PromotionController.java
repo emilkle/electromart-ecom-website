@@ -1,25 +1,15 @@
 package com.electromart.electromart.controller;
 
-import com.electromart.electromart.dto.BrandDTO;
-import com.electromart.electromart.dto.CategoryDTO;
 import com.electromart.electromart.dto.PromotionDTO;
-import com.electromart.electromart.entity.Promotion;
-import com.electromart.electromart.service.CategoryService;
-import com.electromart.electromart.service.ProductReviewService;
 import com.electromart.electromart.service.PromotionService;
-import jakarta.persistence.EntityNotFoundException;
 import java.util.Optional;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 import org.springframework.web.server.ResponseStatusException;
-import org.springframework.web.servlet.NoHandlerFoundException;
-import org.springframework.web.servlet.resource.NoResourceFoundException;
 
 @RestController
 @RequestMapping("/promotion")
@@ -93,7 +83,7 @@ public class PromotionController {
      * @return the response entity
      */
     @DeleteMapping("/promotion_id={id}")
-    public ResponseEntity<?> deletePromotion(@PathVariable String id) {
+    public ResponseEntity<String> deletePromotion(@PathVariable String id) {
         try {
             // Parse the ID string to Long.
             Long promotionId = Long.parseLong(id);
