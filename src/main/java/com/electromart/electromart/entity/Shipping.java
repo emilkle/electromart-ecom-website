@@ -12,15 +12,15 @@ public class Shipping {
 
     @OneToOne
     @JoinColumn(name = "order_ID")
-    private Order orderID;
+    private Order order;
 
     private String shippingMethod;
     private float shippingCost;
 
     public Shipping() {}
 
-    public Shipping(Order orderID, String shippingMethod, float shippingCost){
-        this.orderID = orderID;
+    public Shipping(Order order, String shippingMethod, float shippingCost){
+        this.order = order;
         this.shippingMethod = shippingMethod;
         this.shippingCost = shippingCost;
     }
@@ -33,12 +33,12 @@ public class Shipping {
         this.shippingID = shippingID;
     }
 
-    public Order getOrderID() {
-        return orderID;
+    public Order getOrder() {
+        return order;
     }
 
-    public void setOrderID(Order orderID) {
-        this.orderID = orderID;
+    public void setOrder(Order order) {
+        this.order = order;
     }
 
     public String getShippingMethod() {

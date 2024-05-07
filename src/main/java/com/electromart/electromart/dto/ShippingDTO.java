@@ -5,15 +5,15 @@ import com.electromart.electromart.entity.Order;
 public class ShippingDTO {
 
     private Long shippingID;
-    private Order order;
+    private Long orderID;
     private String shippingMethod;
     private float shippingCost;
 
     public ShippingDTO () {}
 
-    public ShippingDTO(Long shippingID, Order order, String shippingMethod, float shippingCost) {
+    public ShippingDTO(Long shippingID, Long orderID, String shippingMethod, float shippingCost) {
         this.shippingID = shippingID;
-        this.order = order;
+        this.orderID = orderID;
         this.shippingMethod = shippingMethod;
         this.shippingCost = shippingCost;
     }
@@ -26,12 +26,12 @@ public class ShippingDTO {
         this.shippingID = shippingID;
     }
 
-    public Order getOrder() {
-        return order;
+    public Long getOrderID() {
+        return orderID;
     }
 
-    public void setOrder(Order order) {
-        this.order = order;
+    public void setOrderID(Long orderID) {
+        this.orderID = orderID;
     }
 
     public String getShippingMethod() {
