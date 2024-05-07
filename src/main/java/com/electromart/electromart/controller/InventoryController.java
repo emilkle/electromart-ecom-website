@@ -3,6 +3,7 @@ package com.electromart.electromart.controller;
 import com.electromart.electromart.dto.InventoryDTO;
 import com.electromart.electromart.service.InventoryService;
 import jakarta.persistence.EntityNotFoundException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -22,6 +23,7 @@ public class InventoryController {
 
     private final InventoryService inventoryService;
 
+    @Autowired
     public InventoryController(InventoryService inventoryService) {
         this.inventoryService = inventoryService;
     }

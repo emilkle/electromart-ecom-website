@@ -3,6 +3,7 @@ package com.electromart.electromart.controller;
 import com.electromart.electromart.dto.AddressDTO;
 import com.electromart.electromart.service.AddressService;
 import jakarta.persistence.EntityNotFoundException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -22,6 +23,7 @@ public class AddressController {
 
     private final AddressService addressService;
 
+    @Autowired
     public AddressController(AddressService addressService) {
         this.addressService = addressService;
     }

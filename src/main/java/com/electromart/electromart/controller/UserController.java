@@ -1,9 +1,8 @@
 package com.electromart.electromart.controller;
 
-import com.electromart.electromart.dto.CategoryDTO;
 import com.electromart.electromart.dto.UserDTO;
-import com.electromart.electromart.entity.User;
 import com.electromart.electromart.service.UserService;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,9 +16,9 @@ import java.util.Optional;
 @RequestMapping("/users") //means the url starts with /users after application path (i.e. the endpoint)
 public class UserController {
 
-    //@Autowired
     private final UserService userService;
 
+    @Autowired
     public UserController (UserService userService) { this.userService = userService; }
 
     @GetMapping("")
@@ -49,7 +48,12 @@ public class UserController {
     }
 
     @DeleteMapping("/id={id}")
-    public void deleteUser () {
-
+    public ResponseEntity<?> deleteUser(@PathVariable Long id) {
+        try {
+            userService.deleteUser(id);
+            return ResponseEntity.ok().body("User with ID: '" + id + "' successfully deleted.");
+        } catch (EntityNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found with ID: " + id);
+        }
     }
 }

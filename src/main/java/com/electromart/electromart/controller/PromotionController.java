@@ -3,6 +3,8 @@ package com.electromart.electromart.controller;
 import com.electromart.electromart.dto.PromotionDTO;
 import com.electromart.electromart.service.PromotionService;
 import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
@@ -17,6 +19,7 @@ public class PromotionController {
 
     private final PromotionService promotionService;
 
+    @Autowired
     public PromotionController(PromotionService promotionService) {
         this.promotionService = promotionService;
     }
