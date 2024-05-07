@@ -5,9 +5,11 @@ import com.electromart.electromart.entity.User;
 import com.electromart.electromart.repository.UserRepository;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 import java.util.Optional;
@@ -62,6 +64,16 @@ public class UserService {
         System.out.println("user DTO id: " + userDTO.getUserID() +" User id: " + user.getUserId());
         user.setUserId(userDTO.getUserID());
         return user;
+    }
+
+    public void deleteUser(Long id) {
+        // Check if any user with the specified ID exist.
+        if (userRepository.existsById(id)) {
+            userRepository.deleteById(id);
+        } else {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND,
+                    "User not found with ID: " + id);
+        }
     }
 }
 
