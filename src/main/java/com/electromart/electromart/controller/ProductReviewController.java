@@ -66,4 +66,18 @@ public class ProductReviewController {
                 .body("Product review with ID: '" + id + "' not found.");
         }
     }
+
+    /**
+     * Handles POST requests to add a new product review.
+     *
+     * @param productReviewRequest The ProductReviewDTO object representing the new product review.
+     * @return ResponseEntity with a success message and CREATED status.
+     */
+    @PostMapping({"", "/"})
+    public ResponseEntity<String> addNewProductReview(@RequestBody
+                                                          ProductReviewDTO productReviewRequest) {
+        productReviewService.addProductReview(productReviewRequest);
+        return new ResponseEntity<>(
+            "The requested product review was created successfully.", HttpStatus.CREATED);
+    }
 }

@@ -48,6 +48,17 @@ public class ProductReviewService {
     }
 
     /**
+     * Adds a new product review to the database using a ProductReviewDTO object.
+     *
+     * @param productReviewDTO The ProductReviewDTO object representing the
+     *                         product review to be added.
+     */
+    public void addProductReview(ProductReviewDTO productReviewDTO) {
+        ProductReview productReview = convertToEntity(productReviewDTO);
+        productReviewRepository.save(productReview);
+    }
+
+    /**
      * Fetches a specific product review based on the review ID.
      *
      * @param id The review ID of the desired product review.
