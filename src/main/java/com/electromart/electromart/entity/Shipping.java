@@ -7,7 +7,8 @@ import jakarta.persistence.*;
 public class Shipping {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int shippingID;
+    @Column(name="shipping_ID")
+    private Long shippingID;
 
     @OneToOne
     @JoinColumn(name = "order_ID")
@@ -24,11 +25,11 @@ public class Shipping {
         this.shippingCost = shippingCost;
     }
 
-    public int getShippingID() {
+    public Long getShippingID() {
         return shippingID;
     }
 
-    public void setShippingID(int shippingID) {
+    public void setShippingID(Long shippingID) {
         this.shippingID = shippingID;
     }
 
