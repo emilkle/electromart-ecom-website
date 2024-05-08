@@ -1,6 +1,8 @@
 package com.electromart.electromart.service;
 
 import com.electromart.electromart.dto.ProductDTO;
+import com.electromart.electromart.entity.Brand;
+import com.electromart.electromart.entity.Category;
 import com.electromart.electromart.entity.Product;
 import com.electromart.electromart.repository.ProductRepository;
 import java.util.Optional;
@@ -159,6 +161,16 @@ public class ProductService {
         Product product = new Product();
         // Using BeanUtils library for copying the values in the productDTO to the product.
         BeanUtils.copyProperties(productDTO, product);
+        product.setProductId(productDTO.getProductID());
+        Brand brand = new Brand();
+        brand.setBrandId(productDTO.getBrandID());
+        product.setBrand(brand);
+        Category category = new Category();
+        category.setCategoryId(productDTO.getCategory());
+        product.setCategory(category);
+        product.setName(productDTO.getName());
+        product.setDescription(productDTO.getDescription());
+        product.setPrice(productDTO.getPrice());
         return product;
     }
 }

@@ -1,5 +1,7 @@
 package com.electromart.electromart.dto;
 
+import com.electromart.electromart.entity.Brand;
+
 /**
  * Data Transfer Object (DTO) for the product data.
  * It is used to encapsulate the product data that is transferred
@@ -8,9 +10,7 @@ package com.electromart.electromart.dto;
  */
 public class ProductDTO {
     private Long productID;
-    //private Brand brand;
     private Long brandID;
-    //private Category category;
     private Long categoryID;
     private String name;
     private String description;
