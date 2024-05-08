@@ -2,50 +2,32 @@ package com.electromart.electromart.entity;
 
 import jakarta.persistence.*;
 
-/*
 @Entity
-@Table(name="vipps")
-public class Vipps extends Payment{
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long vippsFlag;
-
-    private int phoneNumber;
-
-    public Vipps() {}
-
-    public Vipps(long vippsFlag, int phoneNumber) {
-        super();
-        this.vippsFlag = vippsFlag;
-        this.phoneNumber = phoneNumber;
-    }
-
-    public int getPhoneNumber() {
-        return phoneNumber;
-    }
-
-    public void setPhoneNumber(int phoneNumber) {
-        this.phoneNumber = phoneNumber;
-    }
-}
- */
-
-@Entity
-@DiscriminatorValue("VIPPS")
+@Table(name = "Vipps")
+@DiscriminatorValue(value="Vipps")
 public class Vipps extends Payment {
 
     @Column(name = "vipps_flag")
-    private long vippsFlag;
+    private String vippsFlag;
 
     @Column(name = "phone_number")
     private int phoneNumber;
 
     public Vipps() {}
 
-    public Vipps(long vippsFlag, int phoneNumber) {
-        super();
+    public Vipps(Order orderID, float paymentAmount, String paymentDate,
+                      String paymentStatus, String vippsFlag, int phoneNumber) {
+        super(orderID, paymentAmount, paymentDate, paymentStatus);
         this.vippsFlag = vippsFlag;
         this.phoneNumber = phoneNumber;
+    }
+
+    public String getVippsFlag() {
+        return vippsFlag;
+    }
+
+    public void setVippsFlag(String vippsFlag) {
+        this.vippsFlag = vippsFlag;
     }
 
     public int getPhoneNumber() {

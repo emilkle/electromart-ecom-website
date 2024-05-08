@@ -1,23 +1,20 @@
-package com.electromart.electromart.entity;
+package com.electromart.electromart.dto;
 
-import jakarta.persistence.*;
+import com.electromart.electromart.entity.Klarna;
+import com.electromart.electromart.entity.Payment;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
 
-@Entity
-@Table(name = "Klarna")
-@DiscriminatorValue(value = "Klarna")
-public class Klarna extends Payment {
+public class KlarnaDTO extends PaymentDTO {
 
-    @Column(name = "klarna_flag")
     private String klarnaFlag;
-
-    @Column(name = "email_address")
     private String emailAddress;
 
-    public Klarna() {}
+    public KlarnaDTO(){}
 
-    public Klarna(Order orderID, float paymentAmount, String paymentDate,
-                 String paymentStatus, String klarnaFlag, String emailAddress) {
-        super(orderID, paymentAmount, paymentDate, paymentStatus);
+    public KlarnaDTO(String klarnaFlag, String emailAddress) {
+        super();
         this.klarnaFlag = klarnaFlag;
         this.emailAddress = emailAddress;
     }
