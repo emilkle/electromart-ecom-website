@@ -1,7 +1,9 @@
 package com.electromart.electromart.service;
 
 import com.electromart.electromart.dto.BrandDTO;
+import com.electromart.electromart.dto.CategoryDTO;
 import com.electromart.electromart.entity.Brand;
+import com.electromart.electromart.entity.Category;
 import com.electromart.electromart.repository.BrandRepository;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -41,17 +43,14 @@ public class BrandService {
     }
 
     /**
-     * Get name from id optional.
-     *
-     * @param id the id
-     * @return the optional
+     * Fetches a specific brandDTO based on the brandID.
+     * @param id The brandID of the desired brand.
+     * @return A brandDTO that matches the specified brandID,
+     * or an empty optional if no brand with the specified brandID was found.
      */
-    public Optional<String> getNameFromID(Long id){
-        Optional<BrandDTO> brandDTO = getAllBrands()
-            .stream()
-            .filter(brand -> brand.getBrandId().equals(id))
-            .findFirst();
-        return brandDTO.map(BrandDTO::getName);
+    public Optional<BrandDTO> getBrandById(Long id) {
+        Optional<Brand> optionalBrand = brandRepository.findById(id);
+        return optionalBrand.map(brand -> convertToDTO(brand));
     }
 
     /**

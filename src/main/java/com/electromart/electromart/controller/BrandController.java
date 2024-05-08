@@ -64,22 +64,23 @@ public class BrandController {
     }
 
     /**
-     * Fetch brand name response entity.
-     *
-     * @param id the id
-     * @return the response entity
+     * Handles GET request for fetching a specific brand by its ID, from the database.
+     * If brand is not found, the method returns a message informing about this.
+     * @param id The brandID of the desired brand.
+     * @return ResponseEntity containing the brandDTO if found and HTTP status OK, otherwise NOT_FOUND.
      */
     @GetMapping("/brand_id={id}")
-    public ResponseEntity<String> fetchBrandName(@PathVariable(value = "id", required = false)
-                                                 Long id) {
-        Optional<String> brandNameParam = brandService.getNameFromID(id);
-        if (id != null && id >= 0) {
-            return brandNameParam.map(ResponseEntity::ok)
-                .orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND)
-                    .body("The brand with id " + id + " Was not found"));
+    public ResponseEntity<?> getBrandById(@PathVariable Long id) {
+        // Get the brand
+        Optional<BrandDTO> optionalBrand = brandService.getBrandById(id);
+        // Check if the specified brand exists
+        if (optionalBrand.isPresent()) {
+            //Return the brand and HTTP status code OK
+            return new ResponseEntity<>(optionalBrand.get(), HttpStatus.OK);
         } else {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                .body("No valid id was specified.");
+            // If the brand does not exist, return HTTP status code NOT_FOUND
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Brand with ID: " +
+                "'" + id + "' not found");
         }
     }
 
