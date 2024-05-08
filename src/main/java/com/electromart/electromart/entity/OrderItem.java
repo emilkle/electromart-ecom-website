@@ -1,62 +1,12 @@
 package com.electromart.electromart.entity;
 
 import jakarta.persistence.*;
-import org.aspectj.weaver.ast.Or;
 
-/*
-@Entity
-@Table(name="Orderitems")
-public class OrderItem {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @JoinColumn(name="order_ID")
-    private int orderID;
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @JoinColumn(name="product_ID")
-    @OneToOne(cascade=CascadeType.ALL)
-    private Product productID;
-
-    private String itemQuantity;
-    private String itemSubtotal;
-
-    public OrderItem(){}
-
-    public OrderItem(String itemQuantity, String itemSubtotal) {
-        this.itemQuantity = itemQuantity;
-        this.itemSubtotal = itemSubtotal;
-    }
-
-
-    public Product getProductID() {
-        return productID;
-    }
-
-    public void setProductID(Product productID) {
-        this.productID = productID;
-    }
-
-    public String getItemQuantity() {
-        return itemQuantity;
-    }
-
-    public void setItemQuantity(String itemQuantity) {
-        this.itemQuantity = itemQuantity;
-    }
-
-    public String getItemSubtotal() {
-        return itemSubtotal;
-    }
-
-    public void setItemSubtotal(String itemSubtotal) {
-        this.itemSubtotal = itemSubtotal;
-    }
-}
+/**
+ * The OrderItem class represents the order item entities that are stored in the database.
  */
-
 @Entity
-@Table(name="OrderItem")
+@Table(name="Orderitem")
 public class OrderItem {
     @EmbeddedId
     private OrderItemId id;
@@ -66,16 +16,24 @@ public class OrderItem {
     @JoinColumn(name="product_ID")
     private Product productID;
 
-    private String itemQuantity;
-    private String itemSubtotal;
+    private int itemQuantity;
+    private float itemSubtotal;
 
     public OrderItem(){}
 
-    public OrderItem(OrderItemId id, Product product, String itemQuantity, String itemSubtotal) {
+    public OrderItem(OrderItemId id, Product product, int itemQuantity, float itemSubtotal) {
         this.id = id;
         this.productID = product;
         this.itemQuantity = itemQuantity;
         this.itemSubtotal = itemSubtotal;
+    }
+
+    public OrderItemId getId() {
+        return id;
+    }
+
+    public void setId(OrderItemId id) {
+        this.id = id;
     }
 
     public Product getProduct() {
@@ -86,19 +44,19 @@ public class OrderItem {
         this.productID = product;
     }
 
-    public String getItemQuantity() {
+    public int getItemQuantity() {
         return itemQuantity;
     }
 
-    public void setItemQuantity(String itemQuantity) {
+    public void setItemQuantity(int itemQuantity) {
         this.itemQuantity = itemQuantity;
     }
 
-    public String getItemSubtotal() {
+    public float getItemSubtotal() {
         return itemSubtotal;
     }
 
-    public void setItemSubtotal(String itemSubtotal) {
+    public void setItemSubtotal(float itemSubtotal) {
         this.itemSubtotal = itemSubtotal;
     }
 }

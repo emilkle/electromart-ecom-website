@@ -19,9 +19,9 @@ import java.util.List;
 @Service
 public class BrandService {
 
-    @Autowired
     private final BrandRepository brandRepository;
 
+    @Autowired
     public BrandService(BrandRepository brandRepository) {
         this.brandRepository = brandRepository;
     }

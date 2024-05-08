@@ -5,6 +5,7 @@ import com.electromart.electromart.dto.InventoryDTO;
 import com.electromart.electromart.entity.Inventory;
 import com.electromart.electromart.repository.InventoryRepository;
 import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -18,6 +19,7 @@ public class InventoryService {
     private final InventoryRepository inventoryRepository;
     private final ProductController product;
 
+    @Autowired
     public InventoryService(InventoryRepository inventoryRepository, ProductController product) {
         this.inventoryRepository = inventoryRepository;
         this.product = product;

@@ -39,6 +39,7 @@ public class BrandController {
     private final ProductRepository productRepository;
     private final ProductService productService;
 
+    @Autowired
     BrandController(BrandService brandService, BrandRepository repository,
                     ProductRepository productRepository, ProductService productService) {
         this.brandRepository = repository;

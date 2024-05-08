@@ -27,7 +27,7 @@ public class ProductDTO {
         this.price = price;
     }
 
-    public long getProductID() {
+    public Long getProductID() {
         return productID;
     }
 

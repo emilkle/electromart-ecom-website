@@ -2,6 +2,7 @@ package com.electromart.electromart.controller;
 
 import com.electromart.electromart.dto.ShippingDTO;
 import com.electromart.electromart.service.ShippingService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
@@ -25,6 +26,7 @@ public class ShippingController {
      *
      * @param shippingService The service responsible for handling shipping-related operations.
      */
+    @Autowired
     public ShippingController(ShippingService shippingService) {
         this.shippingService = shippingService;
     }
