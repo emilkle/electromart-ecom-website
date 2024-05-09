@@ -93,7 +93,7 @@ public class CategoryControllerTest {
     public void testDeleteCategorySuccess() throws Exception {
         doNothing().when(categoryService).deleteCategory(1L);
 
-        mvc.perform(delete("/category/1"))
+        mvc.perform(delete("/category/category_id=1"))
                 .andExpect(status().isOk())
                 .andExpect(content().string("Category with ID: '1' successfully deleted."));
     }
@@ -102,7 +102,7 @@ public class CategoryControllerTest {
     public void testDeleteCategoryNotFound() throws Exception {
         doThrow(EntityNotFoundException.class).when(categoryService).deleteCategory(1L);
 
-        mvc.perform(delete("/category/1"))
+        mvc.perform(delete("/category/category_id=1"))
                 .andExpect(status().isNotFound())
                 .andExpect(content().string("Category not found with ID: 1"));
     }
