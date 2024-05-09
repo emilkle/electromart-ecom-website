@@ -33,7 +33,7 @@ public class OrderController {
      * @return A list with all the orders in the database.
      * @throws ResponseStatusException with HttpStatus.NOT_FOUND if no orders are found.
      */
-    @GetMapping("")
+    @GetMapping({"","/"})
     public ResponseEntity<?> fetchAllOrders() {
         List<OrderDTO> orders = orderService.getAllOrders();
         // If no orders exist return HTTP status code OK and message
@@ -49,7 +49,7 @@ public class OrderController {
      * @param orderDTO The orderDTO representing the order to be added.
      * @return ResponseEntity containing the added orderDTO and a http status code CREATED.
      */
-    @PostMapping("")
+    @PostMapping({"","/"})
     public ResponseEntity<OrderDTO> addOrder(@RequestBody OrderDTO orderDTO) {
         // Add the order to the database
         OrderDTO savedOrder = orderService.addOrder(orderDTO);
@@ -63,7 +63,7 @@ public class OrderController {
      * @param id The orderID of the desired order.
      * @return ResponseEntity containing the orderDTO if found and HTTP status OK, otherwise NOT_FOUND.
      */
-    @GetMapping("/{id}")
+    @GetMapping("/order_id={id}")
     // Return type set to "?" for flexible return type in case the desired order does not exist and
     // a order not found message needs to be returned.
     public ResponseEntity<?> getOrderById(@PathVariable Long id) {
@@ -84,7 +84,7 @@ public class OrderController {
      * @param id The orderID of the order to be deleted.
      * @return ResponseEntity containing the outcome of the deletion.
      */
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/order_id={id}")
     public ResponseEntity<?> deleteOrder(@PathVariable Long id) {
         try {
             orderService.deleteOrder(id);

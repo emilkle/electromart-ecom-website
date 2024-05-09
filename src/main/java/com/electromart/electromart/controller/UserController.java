@@ -12,8 +12,8 @@ import org.springframework.web.server.ResponseStatusException;
 import java.util.List;
 import java.util.Optional;
 
-@RestController //means this is a controller
-@RequestMapping("/users") //means the url starts with /users after application path (i.e. the endpoint)
+@RestController
+@RequestMapping("/user")
 public class UserController {
 
     private final UserService userService;
@@ -21,7 +21,7 @@ public class UserController {
     @Autowired
     public UserController (UserService userService) { this.userService = userService; }
 
-    @GetMapping("")
+    @GetMapping({"","/"})
     public List<UserDTO> fetchAllUsers() {
         List<UserDTO> users = userService.getAllUsers();
         if (users.isEmpty()) {
@@ -31,7 +31,7 @@ public class UserController {
         }
     }
 
-    @GetMapping("/id={id}")
+    @GetMapping("/user_id={id}")
     public ResponseEntity<?> getUserByID(@PathVariable long id) {
         Optional<UserDTO> optionalUSer = userService.getUserByID(id);
         if (optionalUSer.isPresent()) {
@@ -41,13 +41,13 @@ public class UserController {
         }
     }
 
-    @PostMapping("")
+    @PostMapping({"","/"})
     public ResponseEntity<UserDTO> addUser (@RequestBody UserDTO userDTO) {
         UserDTO savedUser = userService.addUser(userDTO);
         return new ResponseEntity<>(savedUser, HttpStatus.CREATED);
     }
 
-    @DeleteMapping("/id={id}")
+    @DeleteMapping("/user_id={id}")
     public ResponseEntity<?> deleteUser(@PathVariable Long id) {
         try {
             userService.deleteUser(id);

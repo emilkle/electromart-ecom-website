@@ -51,7 +51,7 @@ public class OrderItemController {
      * @param orderItemDTO The orderItemDTO representing the orderItem to be added.
      * @return ResponseEntity containing the added orderItemDTO and a http status code CREATED.
      */
-    @PostMapping("")
+    @PostMapping({"","/"})
     public ResponseEntity<?> addOrderItem(@RequestBody OrderItemDTO orderItemDTO) {
         boolean errorFlag = false;
         ResponseEntity<?> response = null;

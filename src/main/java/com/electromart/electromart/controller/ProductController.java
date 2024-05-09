@@ -28,7 +28,7 @@ public class ProductController {
      * @return A list with all the products in the database.
      * @throws ResponseStatusException with HttpStatus. OK with message if no products are found.
      */
-    @GetMapping({"/"})
+    @GetMapping({"","/"})
     public ResponseEntity<?> fetchAllProducts() {
         List<ProductDTO> products = productService.getAllProducts();
         if (products.isEmpty()) {
@@ -43,7 +43,7 @@ public class ProductController {
      * @param productDTO The productDTO representing the product to be added.
      * @return ResponseEntity containing the added productDTO and a http status code CREATED.
      */
-    @PostMapping("/")
+    @PostMapping({"","/"})
     public ResponseEntity<ProductDTO> addProduct(@RequestBody ProductDTO productDTO) {
         // Add the product to the database
         ProductDTO savedProduct = productService.addProduct(productDTO);
@@ -57,7 +57,7 @@ public class ProductController {
      * @param id The productID of the desired product.
      * @return ResponseEntity containing the productDTO if found and HTTP status OK, otherwise OK and message.
      */
-    @GetMapping("/category_id={id}")
+    @GetMapping("/product_id={id}")
     // Return type set to "?" for flexible return type in case the desired product does not exist and
     // a product not found message needs to be returned.
     public ResponseEntity<?> getProductById(@PathVariable Long id) {
@@ -105,7 +105,7 @@ public class ProductController {
      * @param id The productID of the product to be deleted.
      * @return ResponseEntity containing the outcome of the deletion.
      */
-    @DeleteMapping("/delete-category/category_id={id}")
+    @DeleteMapping("/product_id={id}")
     public ResponseEntity<?> deleteProduct(@PathVariable Long id) {
         try {
             productService.deleteProduct(id);

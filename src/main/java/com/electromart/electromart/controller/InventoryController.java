@@ -33,7 +33,7 @@ public class InventoryController {
      * @return A list with all the inventory items in the database.
      * @throws ResponseStatusException with HttpStatus.NOT_FOUND if no inventory items are found.
      */
-    @GetMapping("")
+    @GetMapping({"","/"})
     public ResponseEntity<?> fetchAllInventoryItems() {
         List<InventoryDTO> inventoryItems = inventoryService.getAllInventoryItems();
         if (inventoryItems.isEmpty()) {
@@ -48,7 +48,7 @@ public class InventoryController {
      * @param inventoryDTO The inventoryDTO representing the inventory item to be added.
      * @return ResponseEntity containing the added inventoryDTO and a http status code CREATED.
      */
-    @PostMapping("")
+    @PostMapping({"","/"})
     public ResponseEntity<InventoryDTO> addInventoryItem(@RequestBody InventoryDTO inventoryDTO) {
         // Add the inventory item to the database
         InventoryDTO savedInventoryItem = inventoryService.addInventoryItem(inventoryDTO);
@@ -62,7 +62,7 @@ public class InventoryController {
      * @param id The inventoryID of the desired inventory item.
      * @return ResponseEntity containing the inventoryDTO if found and HTTP status OK, otherwise NOT_FOUND.
      */
-    @GetMapping("/{id}")
+    @GetMapping("/inventory_id={id}")
     // Return type set to "?" for flexible return type in case the desired inventiory item does not exist and
     // an inventory item not found message needs to be returned.
     public ResponseEntity<?> getInventoryItemById(@PathVariable Long id) {
@@ -83,7 +83,7 @@ public class InventoryController {
      * @param id The inventoryID of the inventory item to be deleted.
      * @return ResponseEntity containing the outcome of the deletion.
      */
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/inventory_id={id}")
     public ResponseEntity<?> deleteInventoryItem(@PathVariable Long id) {
         try {
             inventoryService.deleteInventoryItem(id);
