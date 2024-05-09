@@ -24,18 +24,14 @@ import org.springframework.web.server.ResponseStatusException;
 public class PromotionService {
 
     private final PromotionRepository promotionRepository;
-    private final ProductRepository productRepository;
 
     /**
      * Constructor for PromotionService.
      *
      * @param promotionRepository The repository for managing Promotion entities.
-     * @param productRepository   The repository for managing Product entities.
      */
-    public PromotionService(PromotionRepository promotionRepository,
-                            ProductRepository productRepository) {
+    public PromotionService(PromotionRepository promotionRepository) {
         this.promotionRepository = promotionRepository;
-        this.productRepository = productRepository;
     }
 
     /**
@@ -139,26 +135,5 @@ public class PromotionService {
         } else {
             throw new IllegalArgumentException("Invalid discount type");
         }
-    }
-
-    /**
-     * Starts a promotion and updates the corresponding product with the correct discounted price.
-     *
-     * @param productID     The product's ID.
-     * @param description   The description of the promotion.
-     * @param discountType  The type of discount (percentage or fixed).
-     * @param discountValue The amount of discount.
-     * @param startDate     The start date of the promotion.
-     * @param endDate       The end date of the promotion.
-     */
-    public void startPromotionAndUpdatePrice(Product productID, String description,
-                                             String discountType, int discountValue,
-                                             Date startDate, Date endDate) {
-        Promotion promotion = new Promotion(productID, description, discountType,
-            discountValue, startDate, endDate);
-        promotionRepository.save(promotion);
-        float discountPrice = calculateDiscountPrice(productID, promotion);
-        productID.setPrice(discountPrice);
-        productRepository.save(productID);
     }
 }

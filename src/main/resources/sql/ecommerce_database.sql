@@ -259,7 +259,7 @@ CREATE TABLE `payment` (
 
 INSERT INTO `payment` (`payment_ID`, `order_ID`, `payment_method`, `payment_amount`, `payment_date`, `payment_status`) VALUES
 (2, 1, 'Credit card', 50, '2024-05-10', 'Completed'),
-(3, 1, 'Payment', 100, '2024-05-12', 'Pending');
+(3, 1, 'Klarna', 100, '2024-05-12', 'Pending');
 
 -- --------------------------------------------------------
 
