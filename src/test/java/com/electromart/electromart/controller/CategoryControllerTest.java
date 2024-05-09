@@ -3,11 +3,17 @@ package com.electromart.electromart.controller;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.doThrow;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+
 import static org.hamcrest.Matchers.*;
+
+import jakarta.persistence.EntityNotFoundException;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -30,7 +36,7 @@ import java.util.Optional;
 @SpringBootTest(
         webEnvironment = SpringBootTest.WebEnvironment.MOCK,
         classes = ElectromartApplication.class)
-@AutoConfigureMockMvc
+@AutoConfigureMockMvc()
 @TestPropertySource(locations = "classpath:applicationtest.properties")
 public class CategoryControllerTest {
 
@@ -66,49 +72,38 @@ public class CategoryControllerTest {
                 .andExpect(jsonPath("$.description", is("All electronic items")));
     }
 
-
-    /*
     @Test
     public void testAddCategory() throws Exception {
-        // Mocked Category data to simulate the addition of a new category
-        CategoryDTO newCategory = new CategoryDTO();
-        newCategory.setName("Electronics");
-        newCategory.setDescription("All electronic items");
-        CategoryDTO savedCategory = new CategoryDTO(1L, "Electronics", "All electronic items");
-
-        // Mock the service method to return the saved category after addition
-        when(categoryService.addCategory(newCategory)).thenReturn(savedCategory);
-
-        // Make post request
-        mvc.perform(post("/category")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content("{ \"name\": \"Electronics\", \"description\": \"All electronic items\" }"))  // Pass the JSON body
-                .andExpect(status().isCreated())  // Verify HTTP 201 Created
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON))  // Verify the response is JSON
-                .andExpect(jsonPath("$.name", is("Electronics")))  // Verify the name
-                .andExpect(jsonPath("$.description", is("All electronic items")))  // Verify the description
-                .andExpect(jsonPath("$.categoryId", is(1L)));  // Verify the ID of the saved category
-    }
-
-     */
-
-    @Test
-    public void testAddCategory() throws Exception {
-        CategoryDTO newCategory = new CategoryDTO();
-        newCategory.setName("Electronics");
-        newCategory.setDescription("All electronic items");
+        CategoryDTO newCategory = new CategoryDTO(null, "Electronics", "All electronic items");
         CategoryDTO returnedCategory = new CategoryDTO(1L, "Electronics", "All electronic items");
 
-        //when(categoryService.addCategory((CategoryDTO) any(CategoryDTO.class))).thenReturn(returnedCategory);
-        when(categoryService.addCategory(newCategory)).thenReturn(returnedCategory);
+        when(categoryService.addCategory(any(CategoryDTO.class))).thenReturn(returnedCategory);
 
         mvc.perform(post("/category")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("{\"name\":\"Electronics\",\"description\":\"All electronic items\"}"))
                 .andExpect(status().isCreated())
-                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.categoryId", is(1)))
                 .andExpect(jsonPath("$.name", is("Electronics")))
                 .andExpect(jsonPath("$.description", is("All electronic items")));
+    }
+
+    @Test
+    public void testDeleteCategorySuccess() throws Exception {
+        doNothing().when(categoryService).deleteCategory(1L);
+
+        mvc.perform(delete("/category/1"))
+                .andExpect(status().isOk())
+                .andExpect(content().string("Category with ID: '1' successfully deleted."));
+    }
+
+    @Test
+    public void testDeleteCategoryNotFound() throws Exception {
+        doThrow(EntityNotFoundException.class).when(categoryService).deleteCategory(1L);
+
+        mvc.perform(delete("/category/1"))
+                .andExpect(status().isNotFound())
+                .andExpect(content().string("Category not found with ID: 1"));
     }
 }
