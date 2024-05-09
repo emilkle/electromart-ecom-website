@@ -28,7 +28,7 @@ public class AddressController {
         this.addressService = addressService;
     }
 
-    @GetMapping("/")
+    @GetMapping({"","/"})
     public ResponseEntity<?> fetchAllAddress() {
         List<AddressDTO> addresses = addressService.getAllAddresses();
         if (addresses.isEmpty()) {
@@ -43,7 +43,7 @@ public class AddressController {
      * @param addressDTO The addressDTO representing the address to be added.
      * @return ResponseEntity containing the added addressDTO and a http status code CREATED.
      */
-    @PostMapping("/")
+    @PostMapping({"","/"})
     public ResponseEntity<AddressDTO> addAddress(@RequestBody AddressDTO addressDTO) {
         // Add the address to the database
         AddressDTO savedAddress = addressService.addAddress(addressDTO);
@@ -57,7 +57,7 @@ public class AddressController {
      * @param id The addressID of the desired address.
      * @return ResponseEntity containing the addressDTO if found and HTTP status OK, otherwise NOT_FOUND.
      */
-    @GetMapping("/get-address/address_id={id}")
+    @GetMapping("/address_id={id}")
     // Return type set to "?" for flexible return type in case the desired address does not exist and
     // an address not found message needs to be returned.
     public ResponseEntity<?> getAddressById(@PathVariable Long id) {
@@ -78,7 +78,7 @@ public class AddressController {
      * @param userId The user ID for whom addresses will be fetched.
      * @return HTTP response containing the list of addresses or an error message if no addresses found.
      */
-    @GetMapping("/user-address/user_id={userId}")
+    @GetMapping("/user_id={userId}")
     public ResponseEntity<?> getAddressByUserId(@PathVariable Long userId) {
         List<AddressDTO> addressList = addressService.getAddressesByUserID(userId);
 
@@ -97,7 +97,7 @@ public class AddressController {
      * @param id The addressID of the address to be deleted.
      * @return ResponseEntity containing the outcome of the deletion.
      */
-    @DeleteMapping("/delete-address/address_id={id}")
+    @DeleteMapping("/address_id={id}")
     public ResponseEntity<?> deleteAddress(@PathVariable Long id) {
         try {
             addressService.deleteAddress(id);

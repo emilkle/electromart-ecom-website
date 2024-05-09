@@ -33,7 +33,7 @@ public class CategoryController {
      * @return A list with all the categories in the database.
      * @throws ResponseStatusException with HttpStatus.NOT_FOUND if no categories are found.
      */
-    @GetMapping({""})
+    @GetMapping({"","/"})
     public ResponseEntity<?> fetchAllCategories() {
         List<CategoryDTO> categories = categoryService.getAllCategories();
         if (categories.isEmpty()) {
@@ -48,7 +48,7 @@ public class CategoryController {
      * @param categoryDTO The categoryDTO representing the category to be added.
      * @return ResponseEntity containing the added categoryDTO and a http status code CREATED.
      */
-    @PostMapping("")
+    @PostMapping({"","/"})
     public ResponseEntity<CategoryDTO> addCategory(@RequestBody CategoryDTO categoryDTO) {
         // Add the category to the database
         CategoryDTO savedCategory = categoryService.addCategory(categoryDTO);
@@ -110,7 +110,7 @@ public class CategoryController {
      * @param id The categoryID of the category to be deleted.
      * @return ResponseEntity containing the outcome of the deletion.
      */
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/category_id={id}")
     public ResponseEntity<?> deleteCategory(@PathVariable Long id) {
         try {
             categoryService.deleteCategory(id);
