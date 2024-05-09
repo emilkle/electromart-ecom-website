@@ -3,6 +3,7 @@ package com.electromart.electromart.controller;
 import com.electromart.electromart.dto.PaymentDTO;
 import com.electromart.electromart.service.AddressService;
 import com.electromart.electromart.service.PaymentService;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -72,13 +73,34 @@ public class PaymentController {
      * Handles POST requests to add a new payment.
      *
      * @param paymentRequest The PaymentDTO object representing the new payment.
-     * @return ResponseEntity with a success message and CREATED status.
+     * @return ResponseEntity with a success message and CREATED status or a ResponseEntity
+     * with an error message with status BAD_REQUEST if the payment method is invalid.
      */
     @PostMapping({"", "/"})
     public ResponseEntity<String> addNewPayment(@RequestBody PaymentDTO paymentRequest) {
-        paymentService.addPayment(paymentRequest);
-        return new ResponseEntity<>(
+        // Validate payment method
+        if (isValidPaymentMethod(paymentRequest.getPaymentMethod())){
+            paymentService.addPayment(paymentRequest);
+            return new ResponseEntity<>(
             "The requested payment was created successfully.", HttpStatus.CREATED);
+        }
+        return new ResponseEntity<>(
+            "The requested payment contains an invalid paymentMethod. " +
+                "Please use one of these instead: 'Klarna', 'Vipps', 'Credit card' " +
+                "or 'Cryptocurrency'",
+            HttpStatus.BAD_REQUEST);
+    }
+
+    /**
+     * Checks if the provided payment method is valid.
+     *
+     * @param paymentMethod The payment method to validate.
+     * @return True if the payment method is valid, otherwise false.
+     */
+    public boolean isValidPaymentMethod(String paymentMethod) {
+        List<String> validPaymentMethods = Arrays.asList("Klarna", "Vipps", "Credit Card",
+            "Cryptocurrency");
+        return validPaymentMethods.contains(paymentMethod);
     }
 
     /**

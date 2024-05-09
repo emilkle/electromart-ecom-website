@@ -5,7 +5,6 @@ import jakarta.persistence.*;
 @Entity
 @Table(name = "Payment")
 @Inheritance(strategy = InheritanceType.JOINED)
-@DiscriminatorColumn(name="payment_method", discriminatorType = DiscriminatorType.STRING)
 public class Payment {
 
     @Id
@@ -17,8 +16,6 @@ public class Payment {
     @JoinColumn(name = "order_ID")
     private Order order;
 
-    // Discriminator value
-    @Column(name = "payment_method", insertable = false, updatable = false)
     private String paymentMethod;
 
     private float paymentAmount;
