@@ -2,10 +2,10 @@
 -- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Generation Time: 04. Mai, 2024 20:21 PM
--- Tjener-versjon: 10.4.32-MariaDB
--- PHP Version: 8.2.12
+-- Host: localhost
+-- Generation Time: May 09, 2024 at 11:17 AM
+-- Server version: 10.4.28-MariaDB
+-- PHP Version: 8.2.4
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -24,7 +24,7 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Tabellstruktur for tabell `address`
+-- Table structure for table `address`
 --
 
 CREATE TABLE `address` (
@@ -37,7 +37,7 @@ CREATE TABLE `address` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_danish_ci;
 
 --
--- Dataark for tabell `address`
+-- Dumping data for table `address`
 --
 
 INSERT INTO `address` (`address_ID`, `user_ID`, `address`, `postal_code`, `city`, `country`) VALUES
@@ -55,7 +55,7 @@ INSERT INTO `address` (`address_ID`, `user_ID`, `address`, `postal_code`, `city`
 -- --------------------------------------------------------
 
 --
--- Tabellstruktur for tabell `brand`
+-- Table structure for table `brand`
 --
 
 CREATE TABLE `brand` (
@@ -65,11 +65,11 @@ CREATE TABLE `brand` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_danish_ci;
 
 --
--- Dataark for tabell `brand`
+-- Dumping data for table `brand`
 --
 
 INSERT INTO `brand` (`brand_ID`, `name`, `description`) VALUES
-(1, 'Apple', 'Computers, smartphones and accessories'),
+(1, 'Apple', 'Brand that makes smartphones'),
 (2, 'Samsung', 'Computers, smartphones and TV'),
 (3, 'JBL', 'Speakers'),
 (4, 'Sony', 'Playstation, cameras'),
@@ -85,7 +85,7 @@ INSERT INTO `brand` (`brand_ID`, `name`, `description`) VALUES
 -- --------------------------------------------------------
 
 --
--- Tabellstruktur for tabell `category`
+-- Table structure for table `category`
 --
 
 CREATE TABLE `category` (
@@ -95,7 +95,7 @@ CREATE TABLE `category` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_danish_ci;
 
 --
--- Dataark for tabell `category`
+-- Dumping data for table `category`
 --
 
 INSERT INTO `category` (`category_ID`, `name`, `description`) VALUES
@@ -111,32 +111,49 @@ INSERT INTO `category` (`category_ID`, `name`, `description`) VALUES
 (10, 'Kitchen utensils', 'Mix masters, blenders, air fryers, pans, accessories, etc'),
 (11, 'Personal care', 'Blow dryers, hair cutters, electrical toothbrushes, etc');
 
+
 -- --------------------------------------------------------
 
 --
--- Tabellstruktur for tabell `creditcard`
+-- Table structure for table `creditcard`
 --
 
 CREATE TABLE `creditcard` (
-  `credit_card_flag` enum('Credit card') NOT NULL DEFAULT 'Credit card',
-  `third_party_service` varchar(255) NOT NULL
+  `credit_card_flag` varchar(255) NOT NULL DEFAULT 'Credit card',
+  `third_party_service` varchar(255) NOT NULL,
+  `payment_ID` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_danish_ci;
+
+--
+-- Dumping data for table `creditcard`
+--
+
+INSERT INTO `creditcard` (`credit_card_flag`, `third_party_service`, `payment_ID`) VALUES
+('Credit card', 'Visa', 1);
 
 -- --------------------------------------------------------
 
 --
--- Tabellstruktur for tabell `cryptocurrency`
+-- Table structure for table `cryptocurrency`
 --
 
 CREATE TABLE `cryptocurrency` (
-  `crypto_flag` enum('Cryptocurrency') NOT NULL DEFAULT 'Cryptocurrency',
-  `currency_name` varchar(255) NOT NULL
+  `crypto_flag` varchar(255) NOT NULL DEFAULT 'Cryptocurrency',
+  `currency_name` varchar(255) NOT NULL,
+  `payment_ID` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_danish_ci;
+
+--
+-- Dumping data for table `cryptocurrency`
+--
+
+INSERT INTO `cryptocurrency` (`crypto_flag`, `currency_name`, `payment_ID`) VALUES
+('Cryptocurrency', 'Monero', 1);
 
 -- --------------------------------------------------------
 
 --
--- Tabellstruktur for tabell `inventory`
+-- Table structure for table `inventory`
 --
 
 CREATE TABLE `inventory` (
@@ -147,7 +164,7 @@ CREATE TABLE `inventory` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_danish_ci;
 
 --
--- Dataark for tabell `inventory`
+-- Dumping data for table `inventory`
 --
 
 INSERT INTO `inventory` (`inventory_ID`, `product_ID`, `quantity`, `last_restock_date`) VALUES
@@ -167,18 +184,26 @@ INSERT INTO `inventory` (`inventory_ID`, `product_ID`, `quantity`, `last_restock
 -- --------------------------------------------------------
 
 --
--- Tabellstruktur for tabell `klarna`
+-- Table structure for table `klarna`
 --
 
 CREATE TABLE `klarna` (
-  `klarna_flag` enum('Klarna') NOT NULL DEFAULT 'Klarna',
-  `email_address` varchar(255) NOT NULL
+  `klarna_flag` varchar(255) NOT NULL DEFAULT 'Klarna',
+  `email_address` varchar(255) NOT NULL,
+  `payment_ID` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_danish_ci;
+
+--
+-- Dumping data for table `klarna`
+--
+
+INSERT INTO `klarna` (`klarna_flag`, `email_address`, `payment_ID`) VALUES
+('Klarna', '123@gmail.com', 1);
 
 -- --------------------------------------------------------
 
 --
--- Tabellstruktur for tabell `order`
+-- Table structure for table `order`
 --
 
 CREATE TABLE `order` (
@@ -189,10 +214,21 @@ CREATE TABLE `order` (
   `order_total_amount` float NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_danish_ci;
 
+--
+-- Dumping data for table `order`
+--
+
+INSERT INTO `order` (`order_ID`, `user_ID`, `order_date`, `order_status`, `order_total_amount`) VALUES
+(1, 1, '2024-05-07', 'Shipped', 100),
+(2, 2, '2024-05-08', 'Processing', 150),
+(3, 3, '2024-05-09', 'Delivered', 200),
+(4, 4, '2024-05-10', 'Canceled', 50),
+(5, 5, '2024-05-11', 'Pending', 120);
+
 -- --------------------------------------------------------
 
 --
--- Tabellstruktur for tabell `orderitem`
+-- Table structure for table `orderitem`
 --
 
 CREATE TABLE `orderitem` (
@@ -205,22 +241,30 @@ CREATE TABLE `orderitem` (
 -- --------------------------------------------------------
 
 --
--- Tabellstruktur for tabell `payment`
+-- Table structure for table `payment`
 --
 
 CREATE TABLE `payment` (
   `payment_ID` int(11) NOT NULL,
   `order_ID` int(11) NOT NULL,
-  `payment_method` enum('Credit card','Cryptocurrency','Vipps','Klarna') NOT NULL DEFAULT 'Credit card',
+  `payment_method` varchar(255) NOT NULL,
   `payment_amount` float NOT NULL,
   `payment_date` date NOT NULL,
   `payment_status` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_danish_ci;
 
+--
+-- Dumping data for table `payment`
+--
+
+INSERT INTO `payment` (`payment_ID`, `order_ID`, `payment_method`, `payment_amount`, `payment_date`, `payment_status`) VALUES
+(2, 1, 'Credit card', 50, '2024-05-10', 'Completed'),
+(3, 1, 'Payment', 100, '2024-05-12', 'Pending');
+
 -- --------------------------------------------------------
 
 --
--- Tabellstruktur for tabell `product`
+-- Table structure for table `product`
 --
 
 CREATE TABLE `product` (
@@ -233,7 +277,7 @@ CREATE TABLE `product` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_danish_ci;
 
 --
--- Dataark for tabell `product`
+-- Dumping data for table `product`
 --
 
 INSERT INTO `product` (`product_ID`, `brand_ID`, `category_ID`, `name`, `description`, `price`) VALUES
@@ -253,7 +297,7 @@ INSERT INTO `product` (`product_ID`, `brand_ID`, `category_ID`, `name`, `descrip
 -- --------------------------------------------------------
 
 --
--- Tabellstruktur for tabell `promotion`
+-- Table structure for table `promotion`
 --
 
 CREATE TABLE `promotion` (
@@ -267,7 +311,7 @@ CREATE TABLE `promotion` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_danish_ci;
 
 --
--- Dataark for tabell `promotion`
+-- Dumping data for table `promotion`
 --
 
 INSERT INTO `promotion` (`promotion_ID`, `product_ID`, `description`, `discount_type`, `discount_value`, `start_date`, `end_date`) VALUES
@@ -277,7 +321,7 @@ INSERT INTO `promotion` (`promotion_ID`, `product_ID`, `description`, `discount_
 -- --------------------------------------------------------
 
 --
--- Tabellstruktur for tabell `review`
+-- Table structure for table `review`
 --
 
 CREATE TABLE `review` (
@@ -290,19 +334,20 @@ CREATE TABLE `review` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_danish_ci;
 
 --
--- Dataark for tabell `review`
+-- Dumping data for table `review`
 --
 
-INSERT INTO `review` (`review_ID`, `user_ID`, `product_ID`, `rating`, `review_text`, `date`) VALUES
+INSERT INTO `review` (`review_ID`, `user_ID`, `product_ID`, `rating`, `review_text`, `review_date`) VALUES
 (1, 0, 2, 0, 'Namber one bullshit brather, I loose against your boy in game', '2024-05-04'),
 (2, 3, 2, 5, 'Great product, good quality', '2024-02-12'),
 (3, 1, 1, 5, 'Greath phone!', '2024-04-30'),
-(4, 5, 5, 5, 'Chama', '2024-05-04');
+(4, 5, 5, 5, 'Chama', '2024-05-04'),
+(5, 3, 1, 5, '!Muy Bien!', '2024-05-07');
 
 -- --------------------------------------------------------
 
 --
--- Tabellstruktur for tabell `shipping`
+-- Table structure for table `shipping`
 --
 
 CREATE TABLE `shipping` (
@@ -312,10 +357,21 @@ CREATE TABLE `shipping` (
   `shipping_cost` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_danish_ci;
 
+--
+-- Dumping data for table `shipping`
+--
+
+INSERT INTO `shipping` (`shipping_ID`, `order_ID`, `shipping_method`, `shipping_cost`) VALUES
+(1, 1, 'Standard Shipping', '10.00'),
+(2, 2, 'Express Shipping', '20.00'),
+(3, 5, 'Next Day Delivery', '30.00'),
+(4, 4, 'Priority Shipping', '15.00'),
+(5, 3, 'International Shipping', '50.00');
+
 -- --------------------------------------------------------
 
 --
--- Tabellstruktur for tabell `user`
+-- Table structure for table `user`
 --
 
 CREATE TABLE `user` (
@@ -327,7 +383,7 @@ CREATE TABLE `user` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_danish_ci;
 
 --
--- Dataark for tabell `user`
+-- Dumping data for table `user`
 --
 
 INSERT INTO `user` (`user_ID`, `email`, `password`, `first_name`, `last_name`) VALUES
@@ -343,13 +399,21 @@ INSERT INTO `user` (`user_ID`, `email`, `password`, `first_name`, `last_name`) V
 -- --------------------------------------------------------
 
 --
--- Tabellstruktur for tabell `vipps`
+-- Table structure for table `vipps`
 --
 
 CREATE TABLE `vipps` (
-  `vipps_flag` enum('Vipps') NOT NULL DEFAULT 'Vipps',
-  `phone_number` int(8) NOT NULL
+  `vipps_flag` varchar(255) NOT NULL DEFAULT 'Vipps',
+  `phone_number` int(8) NOT NULL,
+  `payment_ID` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_danish_ci;
+
+--
+-- Dumping data for table `vipps`
+--
+
+INSERT INTO `vipps` (`vipps_flag`, `phone_number`, `payment_ID`) VALUES
+('Vipps', 90887021, 1);
 
 --
 -- Indexes for dumped tables
@@ -378,13 +442,13 @@ ALTER TABLE `category`
 -- Indexes for table `creditcard`
 --
 ALTER TABLE `creditcard`
-  ADD PRIMARY KEY (`credit_card_flag`);
+  ADD PRIMARY KEY (`payment_ID`);
 
 --
 -- Indexes for table `cryptocurrency`
 --
 ALTER TABLE `cryptocurrency`
-  ADD PRIMARY KEY (`crypto_flag`);
+  ADD PRIMARY KEY (`payment_ID`);
 
 --
 -- Indexes for table `inventory`
@@ -397,7 +461,7 @@ ALTER TABLE `inventory`
 -- Indexes for table `klarna`
 --
 ALTER TABLE `klarna`
-  ADD PRIMARY KEY (`klarna_flag`);
+  ADD PRIMARY KEY (`payment_ID`);
 
 --
 -- Indexes for table `order`
@@ -418,8 +482,7 @@ ALTER TABLE `orderitem`
 --
 ALTER TABLE `payment`
   ADD PRIMARY KEY (`payment_ID`),
-  ADD KEY `order_ID` (`order_ID`),
-  ADD KEY `payment_method` (`payment_method`);
+  ADD KEY `order_ID` (`order_ID`);
 
 --
 -- Indexes for table `product`
@@ -461,7 +524,7 @@ ALTER TABLE `user`
 -- Indexes for table `vipps`
 --
 ALTER TABLE `vipps`
-  ADD PRIMARY KEY (`vipps_flag`);
+  ADD PRIMARY KEY (`payment_ID`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -477,13 +540,25 @@ ALTER TABLE `address`
 -- AUTO_INCREMENT for table `brand`
 --
 ALTER TABLE `brand`
-  MODIFY `brand_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `brand_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
 
 --
 -- AUTO_INCREMENT for table `category`
 --
 ALTER TABLE `category`
-  MODIFY `category_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `category_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+
+--
+-- AUTO_INCREMENT for table `creditcard`
+--
+ALTER TABLE `creditcard`
+  MODIFY `payment_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `cryptocurrency`
+--
+ALTER TABLE `cryptocurrency`
+  MODIFY `payment_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `inventory`
@@ -492,22 +567,28 @@ ALTER TABLE `inventory`
   MODIFY `inventory_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
+-- AUTO_INCREMENT for table `klarna`
+--
+ALTER TABLE `klarna`
+  MODIFY `payment_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
 -- AUTO_INCREMENT for table `order`
 --
 ALTER TABLE `order`
-  MODIFY `order_ID` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `order_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1006;
 
 --
 -- AUTO_INCREMENT for table `payment`
 --
 ALTER TABLE `payment`
-  MODIFY `payment_ID` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `payment_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `product`
 --
 ALTER TABLE `product`
-  MODIFY `product_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `product_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT for table `promotion`
@@ -519,81 +600,77 @@ ALTER TABLE `promotion`
 -- AUTO_INCREMENT for table `review`
 --
 ALTER TABLE `review`
-  MODIFY `review_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `review_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `shipping`
 --
 ALTER TABLE `shipping`
-  MODIFY `shipping_ID` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `shipping_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
--- AUTO_INCREMENT for table `user`
+-- AUTO_INCREMENT for table `vipps`
 --
-ALTER TABLE `user`
-  MODIFY `user_ID` int(11) NOT NULL AUTO_INCREMENT;
+ALTER TABLE `vipps`
+  MODIFY `payment_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
--- Begrensninger for dumpede tabeller
+-- Constraints for dumped tables
 --
 
 --
--- Begrensninger for tabell `address`
+-- Constraints for table `address`
 --
 ALTER TABLE `address`
   ADD CONSTRAINT `address_ibfk_1` FOREIGN KEY (`user_ID`) REFERENCES `user` (`user_ID`);
 
 --
--- Begrensninger for tabell `inventory`
+-- Constraints for table `inventory`
 --
 ALTER TABLE `inventory`
   ADD CONSTRAINT `inventory_product_product_ID_fk` FOREIGN KEY (`product_ID`) REFERENCES `product` (`product_ID`);
 
 --
--- Begrensninger for tabell `order`
+-- Constraints for table `order`
 --
 ALTER TABLE `order`
   ADD CONSTRAINT `order_ibfk_1` FOREIGN KEY (`user_ID`) REFERENCES `user` (`user_ID`);
 
 --
--- Begrensninger for tabell `orderitem`
+-- Constraints for table `orderitem`
 --
 ALTER TABLE `orderitem`
   ADD CONSTRAINT `orderitem_order_order_ID_fk` FOREIGN KEY (`order_ID`) REFERENCES `order` (`order_ID`),
   ADD CONSTRAINT `orderitem_product_product_ID_fk` FOREIGN KEY (`product_ID`) REFERENCES `product` (`product_ID`);
 
 --
--- Begrensninger for tabell `payment`
+-- Constraints for table `payment`
 --
 ALTER TABLE `payment`
-  ADD CONSTRAINT `payment_ibfk_1` FOREIGN KEY (`order_ID`) REFERENCES `order` (`order_ID`),
-  ADD CONSTRAINT `payment_ibfk_2` FOREIGN KEY (`payment_method`) REFERENCES `creditcard` (`credit_card_flag`),
-  ADD CONSTRAINT `payment_ibfk_3` FOREIGN KEY (`payment_method`) REFERENCES `klarna` (`klarna_flag`),
-  ADD CONSTRAINT `payment_ibfk_4` FOREIGN KEY (`payment_method`) REFERENCES `cryptocurrency` (`crypto_flag`),
-  ADD CONSTRAINT `payment_ibfk_5` FOREIGN KEY (`payment_method`) REFERENCES `vipps` (`vipps_flag`);
+  ADD CONSTRAINT `payment_ibfk_1` FOREIGN KEY (`order_ID`) REFERENCES `order` (`order_ID`);
 
 --
--- Begrensninger for tabell `product`
+-- Constraints for table `product`
 --
 ALTER TABLE `product`
   ADD CONSTRAINT `product_ibfk_1` FOREIGN KEY (`brand_ID`) REFERENCES `brand` (`brand_ID`),
   ADD CONSTRAINT `product_ibfk_2` FOREIGN KEY (`category_ID`) REFERENCES `category` (`category_ID`);
 
 --
--- Begrensninger for tabell `promotion`
+-- Constraints for table `promotion`
 --
 ALTER TABLE `promotion`
   ADD CONSTRAINT `promotion_product_product_ID_fk` FOREIGN KEY (`product_ID`) REFERENCES `product` (`product_ID`);
 
 --
--- Begrensninger for tabell `review`
+-- Constraints for table `review`
 --
 ALTER TABLE `review`
   ADD CONSTRAINT `review_ibfk_1` FOREIGN KEY (`user_ID`) REFERENCES `user` (`user_ID`),
   ADD CONSTRAINT `review_product_product_ID_fk` FOREIGN KEY (`product_ID`) REFERENCES `product` (`product_ID`);
 
 --
--- Begrensninger for tabell `shipping`
+-- Constraints for table `shipping`
 --
 ALTER TABLE `shipping`
   ADD CONSTRAINT `shipping_ibfk_1` FOREIGN KEY (`order_ID`) REFERENCES `order` (`order_ID`);
